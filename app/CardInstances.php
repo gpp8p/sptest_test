@@ -173,7 +173,7 @@ class CardInstances extends Model
     }
 
     public function updateCardSize($cardId, $row, $column, $height, $width, $layoutId){
-        $query = "update card_in_layout set row = ?, col = ?, height = ?, width = ? where layout_id = ? and card_instance_id = ?";
+        $query = "update card_in_layout set `row` = ?, col = ?, height = ?, width = ? where layout_id = ? and card_instance_id = ?";
 
         try {
             $affected = DB::select($query, [$row, $column, $height, $width, $layoutId, $cardId]);

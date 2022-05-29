@@ -249,7 +249,7 @@ class LayoutController extends Controller
         return json_encode($allLayouts);
     }
     public function getMySpaces(Request $request){
-
+//        $token = $request->bearerToken();
         if(auth()->user()==null){
             abort(401, 'Unauthorized action.');
         }else{
