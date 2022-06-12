@@ -206,7 +206,7 @@ class CardInstances extends Model
     }
 
     public function insertCard($cardId, $layoutId){
-        $query = "select row, col, height, width from card_instances where id = ?";
+        $query = "select `row`, col, height, width from card_instances where id = ?";
         try {
             $cardData = DB::select($query, [$cardId]);
         } catch (\Exception $e) {

@@ -12,8 +12,8 @@ class ckUploadController extends Controller
     public function recieveFile(Request $request){
         $inData =  $request->all();
         $thisConstants = new Constants;
-        $urlBase = 'http://localhost:8000/';
-//        $urlBase = $thisConstants->Options['urlBase'];
+ //       $urlBase = 'http://localhost:8000/';
+        $urlBase = $thisConstants->Options['urlBase'];
         $pth = $urlBase.'storage/'.$request->file('upload')->store('file');
         $pth = str_replace('/file', '', $pth);
         $path['url'] = $pth;

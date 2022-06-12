@@ -38,7 +38,7 @@ Route::group([
     'prefix' => 'shan',
 ], function($router){
     Route::get('testGet','testController@returnRequest');
-    Route::get('layoutTest', 'layoutController@layoutTest');
+    Route::get('layoutTest', 'LayoutController@layoutTest');
     Route::post('testPost', 'testController@returnPost');
     Route::post('fileUpload', 'FileUploadController@recieveFile')->name('fileUpload');
     Route::post('/imageUploadCk', 'ckUploadController@recieveFile')->name('imageUploadCk');
@@ -75,28 +75,28 @@ Route::group([
     Route::get('getLinks', 'linkController@getLinksByCardId');
     Route::post('createNewLink', 'linkController@createNewLink');
     Route::post('resizeCard', 'cardInstanceController@resizeCard');
-    Route::get('publishOrg', 'layoutController@publishOrg');
+    Route::get('publishOrg', 'LayoutController@publishOrg');
     Route::get('userOrgPerms','OrgController@userOrgPerms' );
-    Route::get('deleteLayout', 'layoutController@deleteLayout');
+    Route::get('deleteLayout', 'LayoutController@deleteLayout');
     Route::get('deleteLink', 'linkController@deleteLink');
-    Route::get('rmvlay', 'layoutController@removeCardFromLayout');
-    Route::get('deleteCard', 'layoutController@deleteCard');
+    Route::get('rmvlay', 'LayoutController@removeCardFromLayout');
+    Route::get('deleteCard', 'LayoutController@deleteCard');
     Route::get('cardList', 'cardInstanceController@getOrgCards');
     Route::post('cardInsert', 'cardInstanceController@cardInsert');
     Route::get('documentDefaults', 'ArchiveController@getDocumentDefaults');
     Route::get('getFile','FileUploadController@sendFile')->name('getFile');
     Route::get('removeUploadedFile', 'FileUploadController@removeUploadedFile')->name('removeUploadedFile');
-    Route::get('getLayoutParams','layoutController@getLayoutParams')->name('getLayoutParams');
-    Route::post('updateLayout', 'layoutController@updateLayout')->name('updateLayout');
+    Route::get('getLayoutParams','LayoutController@getLayoutParams')->name('getLayoutParams');
+    Route::post('updateLayout', 'LayoutController@updateLayout')->name('updateLayout');
     Route::post('updateCardLinks','linkController@updateCardLinks')->name('updateCardLinks');
-    Route::get('availableTemplates', 'layoutController@getAvailableTemplates')->name('getAvailableTemplates');
-    Route::post('cloneTemplate', 'layoutController@cloneTemplate')->name('cloneTemplate');
+    Route::get('availableTemplates', 'LayoutController@getAvailableTemplates')->name('getAvailableTemplates');
+    Route::post('cloneTemplate', 'LayoutController@cloneTemplate')->name('cloneTemplate');
     Route::post('addCurrentLayout', 'linkController@addCurrentLayout')->name('addCurrentLayout');
     Route::get('solrSimpleQuery', 'solrSearchController@simpleQuery')->name('solrSimpleQuery');
     Route::post('updateCardName', 'cardInstanceController@updateCardName');
     Route::post('updateCardTitle', 'cardInstanceController@updateCardTitle')->name('updateCardTitle');
     Route::get('getOrgHome','orgController@getOrgHome')->name('getOrgHome');
-    Route::get('layoutInfo','layoutController@getLayoutInfoById')->name('getLayoutInfo');
+    Route::get('layoutInfo','LayoutController@getLayoutInfoById')->name('getLayoutInfo');
     Route::get('getLinkLabel', 'linkController@getLinkLabel');
 
 
