@@ -6,7 +6,7 @@ use App\Classes\Constants;
 use Illuminate\Http\Request;
 use App\CardInstances;
 use App\InstanceParams;
-use App\layout;
+use App\Layout;
 use App\link;
 use App\Org;
 use App\Solr;
@@ -469,6 +469,7 @@ class cardInstanceController extends Controller
         }
         $cardType = '';
         $indexFile = false;
+        $removeDocumentFromIndex = false;
         $cardTextContent = '';
         $contentFileName = '';
         $fileLocation = '';
@@ -486,6 +487,9 @@ class cardInstanceController extends Controller
             }
             if ($key == 'indexFile') {
                 $indexFile = $value;
+            }
+            if ($key == 'removeDocumentFromIndex'){
+                $removeDocumentFromIndex = $value;
             }
             if ($key == 'accessType') {
                 $accessType = $value;
@@ -716,6 +720,9 @@ class cardInstanceController extends Controller
             }
 
             $thisSolr->addFileToCollection($thisConstants->Options['collection'], $layoutId, $cardId, $contentFileName, $keyWords, $accessType, $documentType, $createDate  );
+        }elseif ($removeDocumentFromIndex){
+            $thisSolr = new Solr;
+            $thisSolr->removeFileFromCollection($thisConstants->Options['collection'], $layoutId, $cardId, $contentFileName, $keyWords, $accessType, $documentType, $createDate  );
         }
         DB::commit();
 

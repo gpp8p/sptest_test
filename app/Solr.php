@@ -5,12 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
 use App\Classes\Constants;
+use Illuminate\Support\Facades\Log;
 
 
 
 
 class Solr extends Model
 {
+    public function removeFileFromCollection($collectionName, $layoutId, $cardId, $fileLocation, $keyWords,$accessType, $documentType, $createDate ){
+        $message = 'at removeFileFromCollection'.$cardId;
+        Log::debug($message);
+    }
     public function addFileToCollection($collectionName, $layoutId, $cardId, $fileLocation, $keyWords,$accessType, $documentType, $createDate ){
         $client = new Client();
         $thisConstants = new Constants;

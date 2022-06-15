@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\ViewType;
+use App\Exceptions;
+use Illuminate\Support\Facades\Log;
 use Storage;
 
 
@@ -168,7 +170,7 @@ class CardInstances extends Model
         try {
             $cardData = DB::select($query, [$newCardName, $cardId]);
         } catch (\Exception $e) {
-            throw $e;
+            throw new Exception($e);
         }
     }
 
