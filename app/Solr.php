@@ -15,6 +15,16 @@ class Solr extends Model
     public function removeFileFromCollection($collectionName, $layoutId, $cardId, $fileLocation, $keyWords,$accessType, $documentType, $createDate ){
         $message = 'at removeFileFromCollection'.$cardId;
         Log::debug($message);
+        $client = new Client();
+        $thisConstants = new Constants;
+        $query = "<delete><query>cardid:".$cardId."</query></delete>";
+        $create = $client->request('POST', $thisConstants->Options['solrBase'].$thisConstants->Options['collection'].'/update?commit=true', [
+            'headers' => [
+                'Content-Type' => 'text/xml; charset=UTF8',
+            ],
+            'body' => $query
+        ]);
+        Log::debug($create);
     }
     public function addFileToCollection($collectionName, $layoutId, $cardId, $fileLocation, $keyWords,$accessType, $documentType, $createDate ){
         $client = new Client();

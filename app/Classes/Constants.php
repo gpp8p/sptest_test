@@ -10,7 +10,7 @@ class Constants{
                 'urlBase'=>'http://localhost:8000/',
                 'spacesBase'=>'http://localhost/spaces/',
                 'solrBase'=>'http://localhost:8983/solr/',
-                'collection'=>'test_collection_0422',
+                'collection'=>'sptest_local_0616',
 //                'solrBase'=>'http://143.198.179.170:8983/solr/',
 //                'collection'=>'core0611',
                 'fileBase'=>'/Users/georgepipkin/Sites/sptest_test/storage/app',
