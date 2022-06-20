@@ -17,7 +17,7 @@ class Solr extends Model
         Log::debug($message);
         $client = new Client();
         $thisConstants = new Constants;
-        $query = "<delete><query>cardid:".$cardId."</query></delete>";
+        $query = "<delete><query>".$thisConstants->Options['cardAttribute'].":".$cardId."</query></delete>";
         $create = $client->request('POST', $thisConstants->Options['solrBase'].$thisConstants->Options['collection'].'/update?commit=true', [
             'headers' => [
                 'Content-Type' => 'text/xml; charset=UTF8',
