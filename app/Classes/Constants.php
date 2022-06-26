@@ -7,6 +7,7 @@ class Constants{
         $requestSource = $_SERVER['HTTP_HOST'];
         if(str_contains($requestSource, 'localhost')){
             $this->Options  = [
+                 'runContext'=>'local',
                 'urlBase'=>'http://localhost:8000/',
                 'spacesBase'=>'http://localhost/spaces/',
                 'solrBase'=>'http://localhost:8983/solr/',
@@ -25,6 +26,7 @@ class Constants{
             ];
         }else{
             $this->Options  = [
+                'runContext'=>'remote',
                 'urlBase'=>'http://sptests.org:8000/',
                 'spacesBase'=>'http://sptests.org/spaces/',
 //                'solrBase'=>'http://sptests.org:8983/solr/',
@@ -37,7 +39,7 @@ class Constants{
                 'storageLinkPattern'=>'<img src=\\"http://sptests.org:8000/storage/',
                 'tempFileReference'=>'http://sptests.org:8000/storage/',
                 'newImageLink'=>'http://sptests.org:8000/images/',
-                'dynamicAddress'=>'http://sptests.org:8080/target/',
+                'dynamicAddress'=>'http://sptests.org/target/',
                 'staticAddress'=>'http://sptests.org/spaces/',
                 'imageLink'=>'http://sptests.org:8000/images/'
             ];

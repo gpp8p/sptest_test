@@ -68,20 +68,39 @@ class Solr extends Model
 
         $thisConstants = new Constants;
         $client = new Client();
-        if(strlen($fqQuery)>0){
-            if(strlen($thisQuery)>0){
-                $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=".$thisQuery."& fq = ".$fqQuery;
+        if($thisConstants->Options['runContext']=='local'){
+            if(strlen($fqQuery)>0){
+                if(strlen($thisQuery)>0){
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=".$thisQuery."& fq = ".$fqQuery;
+                }else{
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=*.*& fq = ".$fqQuery;
+                }
             }else{
-                $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=*.*& fq = ".$fqQuery;
+                if(strlen($thisQuery)>0){
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=".$thisQuery;
+                }else{
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=*.*";
+                }
             }
         }else{
-            if(strlen($thisQuery)>0){
-                $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=".$thisQuery;
+            if(strlen($fqQuery)>0){
+                if(strlen($thisQuery)>0){
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=".$thisQuery."& fq = ".$fqQuery;
+                }else{
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=*.*& fq = ".$fqQuery;
+                }
             }else{
-                $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=*.*";
+                if(strlen($thisQuery)>0){
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=".$thisQuery;
+                }else{
+                    $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=*.*";
+                }
             }
         }
+
 //        $query = $thisConstants->Options['solrBase'].$thisConstants->Options['collection']."/select?q=".$query;
+        $message = 'at client get '.$query;
+        Log::debug($message);
         $response = $client->get($query);
         $body = $response->getBody();
         $responseContent = $body->getContents();
