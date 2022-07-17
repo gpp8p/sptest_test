@@ -399,9 +399,16 @@
                     <div>
                     <div>
                         <span class="flex-container">
+                                @if(isset($thisCard['elementStyles']))
                                     @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
-                            @endforeach
+                                        <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                    @endforeach
+                                @else
+                                    @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                        <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                    @endforeach
+
+                                @endif
                         </span>
                     </div>
                 </div>
@@ -445,9 +452,15 @@
                                     </ul>
                                 @else
                                     <span class="flex-container">
-                                        @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                            <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
-                                        @endforeach
+                                        @if(isset($thisCard['elementStyles']))
+                                            @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                                <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                            @endforeach
+                                        @else
+                                            @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                                <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                            @endforeach
+                                        @endif
                                     </span>
                                 @endif
                             </div>
@@ -480,10 +493,16 @@
                             </ul>
                         @else
                             <span class="flex-container">
-                                            @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                    <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
-                                @endforeach
-                                        </span>
+                                @if(isset($thisCard['elementStyles']))
+                                    @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                        <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                    @endforeach
+                                @else
+                                    @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                        <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                    @endforeach
+                                @endif
+                            </span>
                         @endif
                     </div>
 
