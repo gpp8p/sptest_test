@@ -39,7 +39,7 @@ class Constants{
                 'storageLinkPattern'=>'<img src=\\"http://sptests.org:8000/storage/',
                 'tempFileReference'=>'http://sptests.org:8000/storage/',
                 'newImageLink'=>'http://sptests.org:8000/images/',
-                'dynamicAddress'=>'http://sptests.org/target/',
+                'dynamicAddress'=>'http://sptests.org:8080/target/',
                 'staticAddress'=>'http://sptests.org/spaces/',
                 'imageLink'=>'http://sptests.org:8000/images/'
             ];

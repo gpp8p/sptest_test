@@ -53,12 +53,13 @@ Route::group([
     Route::get('undeleteThisSpace', 'LayoutController@undeleteThisSpace')->name('undeleteThisSpace');
     Route::get('orgList', 'OrgController@getOrgList');
     Route::get('orgUsers', 'OrgController@getOrgUsers');
-    Route::get('availableOrgUsers', 'OrgController@getAvailableOrgUsers');
+    Route::get('getAvailableMembers', 'OrgController@getAvailableUsersInOrg');
+//    Route::get('availableOrgUsers', 'OrgController@getAvailableOrgUsers');
     Route::get('availableUsers', 'OrgController@getAvailableUsers');
     Route::get('orgLayouts', 'LayoutController@getOrgLayouts');
     Route::get('allUsers', 'OrgController@getAllUsers');
     Route::post('newOrg', 'OrgController@newOrg');
-    Route::get('orgGroups', 'GroupsController@getOrgGroups');
+//    Route::get('orgGroups', 'GroupsController@getOrgGroups');
     Route::get('layoutPerms', 'LayoutController@getLayoutPerms');
     Route::post('setLayoutPerms', 'LayoutController@setLayoutPerms');
     Route::get('groupMembers', 'GroupsController@getGroupMembers');
@@ -67,7 +68,7 @@ Route::group([
     Route::post('removeUserFromGroup', 'GroupsController@removeUserFromGroup');
     Route::post('addUserToGroup', 'GroupsController@addUserToGroup');
     Route::post('addAccess', 'LayoutController@addAccessForGroupToLayout');
-    Route::post('setupNewUser', 'UserController@setupNewUser');
+    Route::post('setupNewUser', 'userController@setupNewUser');
     Route::post('createUser', 'userController@createUser');
     Route::post('updatePassword', 'userController@updatePassword');
     Route::post('addUserToOrg','userController@addUserToOrg' );
@@ -95,7 +96,7 @@ Route::group([
     Route::get('solrSimpleQuery', 'solrSearchController@simpleQuery')->name('solrSimpleQuery');
     Route::post('updateCardName', 'cardInstanceController@updateCardName');
     Route::post('updateCardTitle', 'cardInstanceController@updateCardTitle')->name('updateCardTitle');
-    Route::get('getOrgHome','orgController@getOrgHome')->name('getOrgHome');
+    Route::get('getOrgHome','OrgController@getOrgHome')->name('getOrgHome');
     Route::get('layoutInfo','LayoutController@getLayoutInfoById')->name('getLayoutInfo');
     Route::get('getLinkLabel', 'linkController@getLinkLabel');
 
