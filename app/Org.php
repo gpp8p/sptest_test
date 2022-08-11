@@ -10,8 +10,8 @@ class Org extends Model
     public function getOrgId($orgName){
 
         try {
-            $thisOrgId = DB::table('org')->where('org_label', $orgName)->first()->value('id');
-            return $thisOrgId;
+            $thisOrgValue = DB::table('org')->where('org_label', $orgName)->first();
+            return $thisOrgValue->id;
         } catch (Exception $e) {
             throw new Exception('org not found');
         }
@@ -63,6 +63,20 @@ class Org extends Model
         $query = "select users.id, users.name, users.email from userorg, users where users.id = userorg.user_id and userorg.org_id = ?";
         try {
             $orgUserList = DB::select($query,[$orgId]);
+            return $orgUserList;
+        } catch (\Exception $e) {
+            throw new Exception('error in orgUserList'.$e->getMessage());
+        }
+    }
+    public function isUserInOrg($userId, $orgId){
+        $query = "select id from userorg where user_id = ? and org_id = ?";
+        try {
+            $orgUserList = DB::select($query,[$userId, $orgId]);
+            if(count($orgUserList)>0){
+                return true;
+            }else{
+                return false;
+            }
             return $orgUserList;
         } catch (\Exception $e) {
             throw new Exception('error in orgUserList'.$e->getMessage());

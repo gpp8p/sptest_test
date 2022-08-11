@@ -106,6 +106,19 @@ class OrgController extends Controller
          return json_encode($allUsers);
 
      }
+
+    public function userInOrg(Request $request){
+        $inData = $request->all();
+        $orgId = $inData['orgId'];
+        $userId = $inData['userId'];
+        $thisOrg = new Org();
+        if($thisOrg->isUserInOrg($userId, $orgId)){
+            return 'true';
+        }else{
+            return 'false';
+        }
+
+    }
     public function getAvailableUsersInOrg(Request $request){
         if(auth()->user()==null){
             abort(401, 'Unauthorized action.');

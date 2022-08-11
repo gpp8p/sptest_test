@@ -99,6 +99,7 @@ Route::group([
     Route::get('getOrgHome','OrgController@getOrgHome')->name('getOrgHome');
     Route::get('layoutInfo','LayoutController@getLayoutInfoById')->name('getLayoutInfo');
     Route::get('getLinkLabel', 'linkController@getLinkLabel');
+    Route::get('userInOrg', 'OrgController@userInOrg')->name('userInOrg');
 
 
 

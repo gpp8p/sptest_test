@@ -68,7 +68,9 @@ class JWTAuthController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
+        $userInstance = new User();
+        $userFound = $userInstance->findUserByEmail('GuestUser@nomail.com');
+        $guestUserId = $userFound[0]->id;
 
 
         $thisUserName = auth()->user()->name;
@@ -78,6 +80,19 @@ class JWTAuthController extends Controller
         $inData = $request->all();
         $defaultOrg = $inData['default_org'];
         $thisOrgInstance = new Org;
+        try {
+            $orgId = $thisOrgInstance->getOrgId($defaultOrg);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unauthorized - unknown org'], 401);
+        }
+        if($thisUserId!=$guestUserId){
+            if(!$thisOrgInstance->isUserInOrg($thisUserId, $orgId)){
+                return response()->json(['error' => 'Unauthorized - not in org'], 401);
+            }
+        }
+
+
+
         if(is_numeric($defaultOrg)){
             $orgInfo = $thisOrgInstance->getOrgHomeFromOrgId($defaultOrg);
         }else{
