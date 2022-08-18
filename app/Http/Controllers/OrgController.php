@@ -83,7 +83,29 @@ class OrgController extends Controller
         $orgId = $inData['orgId'];
         $thisOrg = new Org();
         $allOrgUsers = $thisOrg->getOrgUsers($orgId);
-        return json_encode($allOrgUsers);
+        $thisOrgRestricted = $thisOrg->getOrgRestricted($orgId);
+        if(count($thisOrgRestricted)==0) {
+            return response()->json([
+                'result'=>'error',
+                'errorDescription'=>'Org not found'
+            ]);
+        }
+        if(is_null($thisOrgRestricted[0]->registration_restricted)){
+            $returnResult = ['orgUsers'=>$allOrgUsers, 'restricted'=>0];
+        }else{
+            $returnResult = ['orgUsers'=>$allOrgUsers, $thisOrgRestricted[0]];
+        }
+
+
+        return json_encode($returnResult);
+    }
+    public function setOrgRestrict(Request $request){
+        $inData = $request->all();
+        $orgId = $inData['orgId'];
+        $restricted = $inData['restricted'];
+        $thisOrg = new Org();
+        $rcdsUpdated = $thisOrg->setOrgRestricted($orgId, $restricted);
+        return $rcdsUpdated;
 
     }
     public function getAvailableOrgUsers(Request $request){

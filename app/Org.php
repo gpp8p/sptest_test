@@ -57,6 +57,24 @@ class Org extends Model
             throw new Exception('error in orgList'.$e->getMessage());
         }
     }
+    public function getOrgRestricted($orgId){
+        $query = "select registration_restricted from org where id = ?";
+        try {
+            $orgRestricted = DB::select($query, [$orgId]);
+            return $orgRestricted;
+        } catch (Exception $e) {
+            throw new Exception('error in orgRestricted'.$e->getMessage());
+        }
+    }
+    public function setOrgRestricted($orgId, $registrationRestricted){
+        $query = "update org set registration_restricted = ? where id = ?";
+        try {
+            $rcdsUpdated = DB::select($query, [$registrationRestricted, $orgId]);
+            return $rcdsUpdated;
+        } catch (Exception $e) {
+            throw new Exception('error in setOrgRestricted'.$e->getMessage());
+        }
+    }
 
     public function getOrgUsers($orgId){
 //        $query = "select * from userorg, users where users.id = userorg.user_id and userorg.org_id = ?";

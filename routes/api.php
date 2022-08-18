@@ -100,7 +100,7 @@ Route::group([
     Route::get('layoutInfo','LayoutController@getLayoutInfoById')->name('getLayoutInfo');
     Route::get('getLinkLabel', 'linkController@getLinkLabel');
     Route::get('userInOrg', 'OrgController@userInOrg')->name('userInOrg');
-
+    Route::get('setOrgRestrict', 'OrgController@setOrgRestrict')->name('setOrgRestrict');
 
 
 
