@@ -103,6 +103,8 @@ Route::group([
     Route::get('setOrgRestrict', 'OrgController@setOrgRestrict')->name('setOrgRestrict');
     Route::get('saveRestrictedRegistrant', 'OrgController@saveRestrictedRegistrant')->name('saveRestrictedRegistrant');
     Route::get('getAllowedRegistrants', 'OrgController@getAllowedRegistrants')->name('getAllowedRegistrants');
+    Route::get('updateAllowedRegistrant', 'OrgController@updateAllowedRegistrant')->name('updateAllowedRegistrant');
+    Route::get('deleteAllowedRegistrant', 'OrgController@deleteAllowedRegistrant')->name('deleteAllowedRegistrant');
 
 
 

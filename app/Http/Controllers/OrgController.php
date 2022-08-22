@@ -152,6 +152,40 @@ class OrgController extends Controller
         }
 
     }
+     public function updateAllowedRegistrant(Request $request){
+         if(auth()->user()==null){
+             abort(401, 'Unauthorized action.');
+         }else{
+             $userId = auth()->user()->id;
+         }
+         $inData = $request->all();
+         $userName = $inData['name'];
+         $userEmail = $inData['email'];
+         $registrantId = $inData['regId'];
+         $thisOrg = new Org();
+         try {
+             $thisOrg->updateAllowedRegistrant($registrantId, $userName, $userEmail);
+             return "ok";
+         } catch (\Exception $e) {
+             return "error saving allowed registrant - ".$e->getMessage();
+         }
+     }
+    public function deleteAllowedRegistrant(Request $request){
+        if(auth()->user()==null){
+            abort(401, 'Unauthorized action.');
+        }else{
+            $userId = auth()->user()->id;
+        }
+        $inData = $request->all();
+        $registrantId = $inData['regId'];
+        $thisOrg = new Org();
+        try {
+            $thisOrg->deleteAllowedRegistrant($registrantId);
+            return "ok";
+        } catch (\Exception $e) {
+            return "error saving allowed registrant - ".$e->getMessage();
+        }
+    }
      public function getAllUsers(Request $request){
          if(auth()->user()==null){
              abort(401, 'Unauthorized action.');

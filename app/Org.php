@@ -84,6 +84,24 @@ class Org extends Model
             throw new Exception('error inserting allowed registrants'.$e->getMessage());
         }
     }
+    public function updateAllowedRegistrant($regId, $userName, $userEmail){
+        $query = "update register_permitted set name = ?, email = ? where id = ?";
+        try {
+            DB::select($query,[$userName, $userEmail, $regId]);
+            return;
+        } catch (\Exception $e) {
+            throw new Exception('error updating allowed registrants'.$e->getMessage());
+        }
+    }
+    public function deleteAllowedRegistrant($regId){
+        $query = "delete from register_permitted where id = ?";
+        try {
+            DB::select($query,[$regId]);
+            return;
+        } catch (\Exception $e) {
+            throw new Exception('error deleting allowed registrant'.$e->getMessage());
+        }
+    }
     public function getAllowedRegistrants($orgId){
         $query = "select id, name, email from register_permitted where org_id = ?";
         try {
