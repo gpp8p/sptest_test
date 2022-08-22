@@ -101,7 +101,8 @@ Route::group([
     Route::get('getLinkLabel', 'linkController@getLinkLabel');
     Route::get('userInOrg', 'OrgController@userInOrg')->name('userInOrg');
     Route::get('setOrgRestrict', 'OrgController@setOrgRestrict')->name('setOrgRestrict');
-
+    Route::get('saveRestrictedRegistrant', 'OrgController@saveRestrictedRegistrant')->name('saveRestrictedRegistrant');
+    Route::get('getAllowedRegistrants', 'OrgController@getAllowedRegistrants')->name('getAllowedRegistrants');
 
 
 

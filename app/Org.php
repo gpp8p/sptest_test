@@ -75,7 +75,24 @@ class Org extends Model
             throw new Exception('error in setOrgRestricted'.$e->getMessage());
         }
     }
-
+    public function newAllowedRegistrant($orgId, $userName, $userEmail){
+        $query = "insert into register_permitted (org_id, name, email) values (?,?,?)";
+        try {
+            DB::select($query,[$orgId, $userName, $userEmail]);
+            return;
+        } catch (\Exception $e) {
+            throw new Exception('error inserting allowed registrants'.$e->getMessage());
+        }
+    }
+    public function getAllowedRegistrants($orgId){
+        $query = "select id, name, email from register_permitted where org_id = ?";
+        try {
+            $allowedRegistrants = DB::select($query,[$orgId]);
+            return $allowedRegistrants;
+        } catch (\Exception $e) {
+            throw new Exception('error fetching allowed registrants'.$e->getMessage());
+        }
+    }
     public function getOrgUsers($orgId){
 //        $query = "select * from userorg, users where users.id = userorg.user_id and userorg.org_id = ?";
         $query = "select users.id, users.name, users.email from userorg, users where users.id = userorg.user_id and userorg.org_id = ?";

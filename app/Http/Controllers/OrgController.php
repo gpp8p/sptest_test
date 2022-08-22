@@ -117,6 +117,41 @@ class OrgController extends Controller
         return json_encode($allOrgUsers);
 
     }
+    public function getAllowedRegistrants(Request $request){
+        if(auth()->user()==null){
+            abort(401, 'Unauthorized action.');
+        }else{
+            $userId = auth()->user()->id;
+        }
+        $inData = $request->all();
+        $orgId = $inData['orgId'];
+        $thisOrg = new Org();
+        try {
+            $allowedRegistrants = $thisOrg->getAllowedRegistrants($orgId);
+            return json_encode($allowedRegistrants);
+        } catch (\Exception $e) {
+            abort(401, 'error fetching allowed users.'.$e->getMessage());
+        }
+    }
+    public function saveRestrictedRegistrant(Request $request){
+        if(auth()->user()==null){
+            abort(401, 'Unauthorized action.');
+        }else{
+            $userId = auth()->user()->id;
+        }
+        $inData = $request->all();
+        $orgId = $inData['orgId'];
+        $userName = $inData['name'];
+        $userEmail = $inData['email'];
+        $thisOrg = new Org();
+        try {
+            $thisOrg->newAllowedRegistrant($orgId, $userName, $userEmail);
+            return "ok";
+        } catch (\Exception $e) {
+            return "error saving allowed registrant - ".$e->getMessage();
+        }
+
+    }
      public function getAllUsers(Request $request){
          if(auth()->user()==null){
              abort(401, 'Unauthorized action.');
