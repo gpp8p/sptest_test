@@ -219,10 +219,10 @@ class OrgController extends Controller
         $thisOrg = new Org();
         try {
             $allowReg = $thisOrg->getRegistrationRestricted($orgId);
-            if($allowReg==1){
-                return 'Y';
-            }else{
+            if($allowReg[0]->registration_restricted==1){
                 return 'N';
+            }else{
+                return 'Y';
             }
         } catch (\Exception $e) {
             return "error getting registrationRestricted - ".$e->getMessage();
