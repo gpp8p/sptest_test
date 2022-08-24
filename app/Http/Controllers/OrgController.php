@@ -83,7 +83,7 @@ class OrgController extends Controller
         $orgId = $inData['orgId'];
         $thisOrg = new Org();
         $allOrgUsers = $thisOrg->getOrgUsers($orgId);
-        $thisOrgRestricted = $thisOrg->getOrgRestricted($orgId);
+        $thisOrgRestricted = $thisOrg->getRegistrationRestricted($orgId);
         if(count($thisOrgRestricted)==0) {
             return response()->json([
                 'result'=>'error',
@@ -184,6 +184,48 @@ class OrgController extends Controller
             return "ok";
         } catch (\Exception $e) {
             return "error saving allowed registrant - ".$e->getMessage();
+        }
+    }
+    public function registrationPermitted(Request $request){
+        if(auth()->user()==null){
+            abort(401, 'Unauthorized action.');
+        }else{
+            $userId = auth()->user()->id;
+        }
+        $inData = $request->all();
+        $userEmail = $inData['userEmail'];
+        $orgId = $inData['orgId'];
+        $thisOrg = new Org();
+        try {
+            if ($thisOrg->isRegistrationPermitted($orgId, $userEmail)) {
+                return 'Y';
+            } else {
+                return 'N';
+            }
+        } catch (\Exception $e) {
+            return "error in registrationPermitted - ".$e->getMessage();
+        }
+
+
+    }
+    public function allowOpenRegistration(Request $request){
+        if(auth()->user()==null){
+            abort(401, 'Unauthorized action.');
+        }else{
+            $userId = auth()->user()->id;
+        }
+        $inData = $request->all();
+        $orgId = $inData['orgId'];
+        $thisOrg = new Org();
+        try {
+            $allowReg = $thisOrg->getRegistrationRestricted($orgId);
+            if($allowReg==1){
+                return 'Y';
+            }else{
+                return 'N';
+            }
+        } catch (\Exception $e) {
+            return "error getting registrationRestricted - ".$e->getMessage();
         }
     }
      public function getAllUsers(Request $request){

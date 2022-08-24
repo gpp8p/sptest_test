@@ -105,8 +105,8 @@ Route::group([
     Route::get('getAllowedRegistrants', 'OrgController@getAllowedRegistrants')->name('getAllowedRegistrants');
     Route::get('updateAllowedRegistrant', 'OrgController@updateAllowedRegistrant')->name('updateAllowedRegistrant');
     Route::get('deleteAllowedRegistrant', 'OrgController@deleteAllowedRegistrant')->name('deleteAllowedRegistrant');
-
-
+    Route::get("allowOpenRegistration", 'OrgController@allowOpenRegistration')->name('allowOpenRegistration');
+    Route::get('registrationPermitted', 'OrgController@registrationPermitted')->name('registrationPermitted');
 
 });
 
