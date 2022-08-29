@@ -405,6 +405,7 @@ class LayoutController extends Controller
             }
 
             $backgroundType = $layoutData['layout']['backgroundType'];
+//            $topOrgId='1';
             $thisLayoutCss = $this->layoutCss($height, $width, $backgroundColor, $backgroundImageUrl, $backgroundType, $orgId);
             /*
                         foreach($layoutData['cards'] as $thisCard){
@@ -462,7 +463,9 @@ class LayoutController extends Controller
             $imageFileName = $backgroundComponents[$backgroundComponentsSize-1];
             $imageSource = $orgDirectory.'/'.$imageFileName;
             $copyToLocation = '/published/'.$orgId.'/images'.'/'.$imageFileName;
-            Storage::copy($imageSource, $copyToLocation);
+            if(!Storage::exists($copyToLocation)) {
+                Storage::copy($imageSource, $copyToLocation);
+            }
             $backgroundUrl = 'url('.$imageBase.$backgroundComponents[$backgroundComponentsSize-1].')';
             $gridCss = "display: grid; grid-gap: 3px; background-image:".$backgroundUrl."; background-size: cover; background-repeat: no-repeat; background-position: center; height: 98vh; color: #ffcd90; ". $gridHeightCss.";".$gridWidthCss.";";
         }

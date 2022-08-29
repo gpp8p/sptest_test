@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Layout;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use App\Classes\Constants;
+use \File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class OrgController extends Controller
 {
@@ -328,6 +332,7 @@ class OrgController extends Controller
          }
          $layoutInstance = new Layout;
          $orgInstance = new Org;
+         $committed=0;
          DB::beginTransaction();
          try {
              $newLayoutId = $layoutInstance->createLayoutWithoutBlanks($name, $height, $width, $description, $backgroundColor, $backgroundImage, $backgroundType, 0, $backgroundDisplay,'N');
@@ -403,8 +408,18 @@ class OrgController extends Controller
              } catch (\Exception $e) {
                  throw $e;
              }
-
+             $committed = 1;
              DB::commit();
+/*
+             if($backgroundType=='I' && $committed>0){
+                 try {
+                     $fixedBackgroundUrl = $this->fileFixup($backgroundImage, $newOrgId);
+                 } catch (\Exception $e) {
+                     throw $e;
+                 }
+//                 $layoutInstance->setBackgroundUrl($fixedBackgroundUrl, $newLayoutId);
+             }
+*/
              return json_encode($newOrgId);
          } catch (\Exception $e) {
              DB::rollBack();
@@ -416,6 +431,40 @@ class OrgController extends Controller
 
      }
 
+    private function fixupBackgroundUrl($existingUrl, $newOrg){
+        $pieces = explode("/", $existingUrl);
+        $pieces[4]=$newOrg;
+        $fileName = $pieces[5];
+        $thisConstants = new Constants();
+        $orgDirectory = '/images/' . $newOrg;
+        if (!Storage::exists($orgDirectory)) {
+            Storage::makeDirectory($orgDirectory);
+        }
+        $newFileDestination = $orgDirectory.'/'.$fileName;
+        $oldOrgDirectory = '/images/' . '1';
+        $oldFileSource = $oldOrgDirectory.'/'.$fileName;
+        File::copy($oldFileSource, $newFileDestination);
+        return  implode('/', $pieces);
+
+    }
+
+    private function fileFixup($path, $newOrg){
+        $message = 'at recieveFile - backgroundImage-' . $path;
+        Log::debug($message);
+        $orgDirectory = '/images/' . $newOrg;
+        if (!Storage::exists($orgDirectory)) {
+            Storage::makeDirectory($orgDirectory);
+        }
+        $copyToLocation = $orgDirectory . '/' . $path;
+        $message = 'at recieveFile - copyToLocation-' . $copyToLocation;
+        Log::debug($message);
+        Storage::copy('file/' . $path, $copyToLocation);//                $accessLocation = "http://localhost:8000/images/" . $org . "/" . $path;
+        $thisConstants = new Constants();
+        $accessLocation = $thisConstants->Options['imageLink'] . $newOrg . "/" . $path;
+        $message = 'at recieveFile - accessLocation-' . $accessLocation;
+        Log::debug($message);
+        return $accessLocation;
+    }
 
 
     /**

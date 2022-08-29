@@ -558,6 +558,16 @@ class Layout extends Model
         return $returnData;
     }
 
+    public function setBackgroundUrl($backgroundUrl, $layoutId){
+        $query = 'update layouts set backgroundUrl = ? where id = ?';
+        try {
+            $recordsUpdated = DB::select($query, [$backgroundUrl, $layoutId]);
+            return $recordsUpdated;
+        } catch (\Exception $e) {
+            throw new Exception('error updating backgroundUrl'.$e->getMessage());
+        }
+    }
+
 
     public function publishThisLayout($layoutId, $orgId, $userId, $imageDirectory, $publishableLayouts)
     {
