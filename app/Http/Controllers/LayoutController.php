@@ -15,6 +15,7 @@ use App\User;
 use App\link;
 use App\Card;
 use App\Classes\Constants;
+use Illuminate\Support\Facades\Log;
 
 
 class LayoutController extends Controller
@@ -406,7 +407,13 @@ class LayoutController extends Controller
 
             $backgroundType = $layoutData['layout']['backgroundType'];
 //            $topOrgId='1';
-            $thisLayoutCss = $this->layoutCss($height, $width, $backgroundColor, $backgroundImageUrl, $backgroundType, $orgId);
+            try {
+                $thisLayoutCss = $this->layoutCss($height, $width, $backgroundColor, $backgroundImageUrl, $backgroundType, $orgId);
+            } catch (\Exception $e) {
+                $message = 'error in layoutCss - '.$e.'-'.$orgId.','.$backgroundImageUrl.', layoutId-'.$thisViewableLayout->layout_id;
+                Log::debug($message);
+                continue;
+            }
             /*
                         foreach($layoutData['cards'] as $thisCard){
                             $cardType = $thisCard['card_component'];
