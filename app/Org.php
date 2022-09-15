@@ -9,6 +9,8 @@ class Org extends Model
 {
     public function getOrgId($orgName){
 
+
+        
         try {
             $thisOrgValue = DB::table('org')->where('org_label', $orgName)->first();
             return $thisOrgValue->id;
