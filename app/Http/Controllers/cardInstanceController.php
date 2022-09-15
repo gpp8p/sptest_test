@@ -230,7 +230,7 @@ class cardInstanceController extends Controller
         $bottomRightRow = $inData['bottomRightRow'];
         $bottomRightCol = $inData['bottomRightCol'];
         $background = 'background-color:#dbddd0;';
-        $cardParams = [['backgroundColor', $background, true],['color','color:blue;', true],['backgroundTypeColor','backgroundTypeColor:checked;',true]];
+        $cardParams = [['backgroundColor', $background, true],['color','color:#0000FF;', true],['backgroundTypeColor','backgroundTypeColor:checked;',true]];
 //        $cardParams = [];
         $thisCardInstance = new CardInstances();
         $cardWidth = ($bottomRightCol-$topLeftCol)+1;
@@ -336,7 +336,7 @@ class cardInstanceController extends Controller
         $deletedCards = DB::select($query3);
 
         $background = '#7FDBFF';
-        $cardParams = [['background-color', $background, true],['color','blue', true]];
+        $cardParams = [['background-color', $background, true],['color','#0000FF', true]];
         $thisCardInstance = new CardInstances();
         $cardWidth = ($bottomRightCol-$topLeftCol)+1;
         $cardHeight = ($bottomRightRow-$topLeftRow)+1;
@@ -382,7 +382,6 @@ class cardInstanceController extends Controller
                     DB::rollBack();
                     throw new Exception('error - could not clean out existing params');
                 }
-
                 foreach($thisDomElementParameters as $key => $value){
                     $thisKey = $key;
                     $thisValue = $value;

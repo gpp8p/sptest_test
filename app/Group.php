@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class Group extends Model
 {
     public function addNewLayoutGroup($layoutId, $layoutLabel, $layoutDescription){
-        $thisGroupDescription = "Layout Group for ".$layoutLabel;
+        $thisGroupDescription = "Page Group for ".$layoutLabel;
         $thisGroupLabel = $layoutLabel;
         $thisGroupId = DB::table('groups')->insertGetId([
             'group_label'=>$thisGroupLabel,
@@ -19,6 +19,7 @@ class Group extends Model
 // add new perms here!!!
         return $thisGroupId;
     }
+
     public function getLayoutGroupId($layoutId){
         $query = "select group_id from perms where group_id in (select group_id from perms where isLayoutGroup=1) and layout_id = ?";
 //        $query = "select group_id from perms where layout_id = ? and isLayoutGroup = 1";

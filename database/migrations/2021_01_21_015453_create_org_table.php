@@ -18,10 +18,11 @@ class CreateOrgTable extends Migration
             $table->string('org_label',32);
             $table->string('description', 255);
             $table->integer('top_layout_id')->default(1);
-            $table->boolean('registration_restricted');
+            $table->boolean('registration_restricted')->default(0);;
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
