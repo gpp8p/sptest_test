@@ -144,6 +144,24 @@ class CardInstances extends Model
 
     }
 
+    public function updateElementStyles($elementParams, $cardInstanceId){
+        $thisInstanceParams = new InstanceParams;
+        $domElementKeys = array_keys($elementParams);
+        foreach($domElementKeys as $thisDomElementKey){
+            $thisDomElement = $elementParams[$thisDomElementKey];
+            foreach($thisDomElement as $thisElement){
+                $styleArray = explode(";", $thisElement);
+                foreach($styleArray as $thisStyle){
+                    if(strlen($thisStyle)<1)break;
+                    $keyVal = explode(":", $thisStyle);
+                    $thisKey = $keyVal[0];
+                    $thisValue = $keyVal[0].':'.$keyVal[1].';';
+                    $thisInstanceParams->createInstanceParam($thisKey, $thisValue,$cardInstanceId, 1, $thisDomElementKey);
+                }
+            }
+        }
+    }
+
     public function getCardNameFromId($cardId){
         $query = "select card_name from card_instances where id = ?";
 

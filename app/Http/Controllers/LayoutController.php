@@ -788,8 +788,10 @@ class LayoutController extends Controller
                         $height = $thisCard['card_position'][2];
                         $width = $thisCard['card_position'][3];
                         $newCardName = $thisCard['card_parameters']['content']['card_name'] .'_'.$newLayoutId;
-
-                        $cardInstance->createCardInstance($newLayoutId, $newCardParameters, $row, $column, $height, $width, 'NavigationMenu', $newCardName, 'F');
+                        $newCardInstanceId = $cardInstance->createCardInstance($newLayoutId, $newCardParameters, $row, $column, $height, $width, 'NavigationMenu', $newCardName, 'F');
+                        if(isset($thisCard['elementStyles'])){
+                            $cardInstance->updateElementStyles($thisCard['elementStyles'], $newCardInstanceId);
+                        }
                     }
                     break;
                 }
