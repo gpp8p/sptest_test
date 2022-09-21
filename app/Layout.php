@@ -199,7 +199,7 @@ class Layout extends Model
 	            "and userorg.org_id = org.id ".
 	            "and perms.view=1 ".
 	            "and org.id = ? ".
-//	            "and users.id=? ".
+	            "and users.id=? ".
                 ")";
 
         $retrievedLayouts  =  DB::select($query, [$orgId, $userId]);
