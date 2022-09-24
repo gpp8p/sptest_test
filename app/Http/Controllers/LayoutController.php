@@ -720,6 +720,7 @@ class LayoutController extends Controller
             $layoutInstance->editPermForGroup($allUserGroupId, $newLayoutId, 'view', 1);
             $layoutInstance->editPermForGroup($newLayoutGroupId, $newLayoutId, 'view', 1);
             $userPersonalGroupId = $personalGroupId;
+            $thisGroup->addOrgToGroup($orgId, $userPersonalGroupId);
             $layoutInstance->editPermForGroup($userPersonalGroupId, $newLayoutId, 'view', 1);
             $layoutInstance->editPermForGroup($userPersonalGroupId, $newLayoutId, 'author', 1);
             $layoutInstance->editPermForGroup($userPersonalGroupId, $newLayoutId, 'admin', 1);
