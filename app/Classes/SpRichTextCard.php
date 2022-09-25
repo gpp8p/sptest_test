@@ -63,6 +63,9 @@ class SpRichTextCard
         }else{
             $content='';
         }
+        $wierdCharacters = chr(226).chr(128).chr(147);
+        $textOut = $this->contentIn;
+        $this->contentIn = str_replace($wierdCharacters,'-', $textOut);
         $this->content = $this->contentIn;
     }
     public function getCardContent(){
