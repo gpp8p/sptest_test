@@ -480,17 +480,25 @@
                 <div>
                     <div>
                         @if($thisCard['card_parameters']['content']['orient']=='vertical')
-                            <span class=""flex-container>
+                            <span class="flex-container" style="{{$thisCard['elementStyles']['sub']}}">
                                 <a href="{{$thisCard['card_parameters']['content']['searchLink']}}" target="_blank">Click Here to Search</a>
                             </span>
+                            <div style="{{$thisCard['elementStyles']['sub']}}">
+                                <ul>
+                                    @if(isset($thisCard['elementStyles']))
+                                        @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                            <li>
+                                                <a class="mlhz" style="text-decoration: none;" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
+                                            </li>
+                                        @endforeach
+                                    @else
+                                        <li>
+                                            <a class="mlhz" style="text-decoration: none;" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
+                                        </li>
+                                    @endif
+                                </ul>
 
-                            <ul>
-                                @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                    <li>
-                                        <a class="mlhz" style="text-decoration: none;" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                            </div>
                         @else
                             <span class="flex-container">
                                 @if(isset($thisCard['elementStyles']))

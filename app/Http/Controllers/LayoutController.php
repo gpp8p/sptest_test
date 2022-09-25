@@ -378,7 +378,7 @@ class LayoutController extends Controller
         }
 
         foreach($viewableLayouts as $thisViewableLayout){
-            if($thisViewableLayout->layout_id==144){
+            if($thisViewableLayout->layout_id==74){
                 $a=0;
             }
             if($thisLayoutInstance->isDeleted($thisViewableLayout->layout_id)) continue;
