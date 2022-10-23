@@ -47,10 +47,13 @@
             width: 100%;
             height: 100%;
         }
-        .mlhz {
-            {{$hzLinkMenuColor}};
+        a:hover {
+            color:red;
         }
-        .mlhz:hover {
+        .hoverLink {
+
+        }
+        hoverLink:hover {
             color:red;
         }
 
@@ -399,16 +402,17 @@
                     <div>
                     <div>
                         <span class="flex-container">
-                                @if(isset($thisCard['elementStyles']))
-                                    @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                        <a class="mlhz" style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
-                                    @endforeach
-                                @else
-                                    @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                        <a class="mlhz" style="text-decoration: none;" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
-                                    @endforeach
+                           @if(isset($thisCard['elementStyles']))
+                                @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                    <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" >{!! $thisLink[1] !!}</a>
+                                @endforeach
+                            @else
+                                @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
+                                    <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" >{!! $thisLink[1] !!}</a>
+                                @endforeach
 
-                                @endif
+                            @endif
+
                         </span>
                     </div>
                 </div>
@@ -446,7 +450,7 @@
                                     <ul>
                                         @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
                                             <li>
-                                                <a class="mlhz" style="text-decoration: none;" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
+                                                <a  style="text-decoration: none;" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -454,11 +458,11 @@
                                     <span class="flex-container">
                                         @if(isset($thisCard['elementStyles']))
                                             @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                                <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                                <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" >{!! $thisLink[1] !!}</a>
                                             @endforeach
                                         @else
                                             @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                                <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                                <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" >{!! $thisLink[1] !!}</a>
                                             @endforeach
                                         @endif
                                     </span>
@@ -488,12 +492,12 @@
                                     @if(isset($thisCard['elementStyles']))
                                         @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
                                             <li>
-                                                <a class="mlhz" style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
+                                                <a  style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
                                             </li>
                                         @endforeach
                                     @else
                                         <li>
-                                            <a class="mlhz" style="text-decoration: none;" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
+                                            <a  style="text-decoration: none;" href="{!! $thisLink[0] !!}">{!! $thisLink[1] !!}</a>
                                         </li>
                                     @endif
                                 </ul>
@@ -503,11 +507,11 @@
                             <span class="flex-container">
                                 @if(isset($thisCard['elementStyles']))
                                     @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                        <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                        <a style="text-decoration: none;{{$thisCard['elementStyles']['sub']}}" href="{!! $thisLink[0] !!}" >{!! $thisLink[1] !!}</a>
                                     @endforeach
                                 @else
                                     @foreach($thisCard['card_parameters']['content']['links'] as $thisLink)
-                                        <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" class="mlhz">{!! $thisLink[1] !!}</a>
+                                        <a style="text-decoration: none;" href="{!! $thisLink[0] !!}" >{!! $thisLink[1] !!}</a>
                                     @endforeach
                                 @endif
                             </span>

@@ -24,15 +24,22 @@ class linkController extends Controller
         $thisCardId = $inData['card_instance_id'];
         $thisOrgId = $inData['org_id'];
         $thisLayoutId = $inData['layout_id'];
-        $thisDescription = $inData['description'];
+        $thisLayoutLinkTo = $inData['layout_link_to'];
+        if(! isset($inData['description'])){
+            $layoutInstance = new Layout;
+            $d = $layoutInstance->getLayoutDescription($thisLayoutLinkTo);
+            $thisDescription = $d[0]->description;
+        }else{
+            $thisDescription = $inData['description'];
+        }
         $thisIsExternal = $inData['is_external'];
         $thisLinkUrl = $inData['linkUrl'];
-        $thisLayoutLinkTo = $inData['layout_link_to'];
+
         $linkType = $inData['type'];
         $thisLayout = new Layout;
         $thisLinkInstance = new link;
         try {
-            $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $thisDescription, $thisLinkUrl, $thisIsExternal, $thisLayoutLinkTo, $linkType);
+            $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $thisDescription, $thisLinkUrl, $thisIsExternal, $thisLayoutLinkTo, $linkType, 1);
             return "ok";
         } catch (\Exception $e) {
             return "Error ".$e;

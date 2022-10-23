@@ -28,7 +28,7 @@ class link extends Model
     public function saveLink($orgId, $layoutId, $cardInstanceId, $description, $linkUrl, $isExternal, $layoutLinkTo, $linkType, $thisShowOrder){
         try {
             $thisLayout = new Layout;
-            $thisOrgId = DB::table('links')->insertGetId([
+            $l = DB::table('links')->insertGetId([
                 'org_id' => $orgId,
 //                'layout_id' => $layoutId,
                 'card_instance_id' => $cardInstanceId,
