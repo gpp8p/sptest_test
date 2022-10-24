@@ -26,6 +26,7 @@ class FileUploadController extends Controller
         Log::debug($message);
 
         switch($inData['fileRole']){
+            case 'imageCard':
             case 'backgroundImage':{
 
                 try {
@@ -65,6 +66,7 @@ class FileUploadController extends Controller
 
                 break;
             }
+
         }
         return $accessLocation;
     }
