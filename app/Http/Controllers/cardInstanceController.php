@@ -601,6 +601,14 @@ class cardInstanceController extends Controller
             $thisCardName = $thisCardInstance->getCardName($cardId);
             $contentFileName = $this->storeContent($org,$thisCardName, $cardId );
             $thisInstanceParams->createInstanceParam('title', $thisCardName, $decodedPost[0], false, $domElement);
+        }else if($cardType=='imageCard'){
+            foreach ($decodedPost[1] as $key => $value) {
+                $thisInstanceParams->createInstanceParam($key, $value, $decodedPost[0], false, $domElement);
+            }
+            $thisCardInstance = new CardInstances();
+            $thisCardName = $thisCardInstance->getCardName($cardId);
+            $contentFileName = $this->storeContent($org,$thisCardName, $cardId );
+            $thisInstanceParams->createInstanceParam('title', $thisCardName, $decodedPost[0], false, $domElement);
         }
 
 
