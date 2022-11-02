@@ -24,6 +24,19 @@ class link extends Model
             throw new Exception('error '.$e.getMessage().' removing old links from '. $cardId);
         }
     }
+    public function linkExistsInCard($cardId, $layoutLinkTo){
+        $query = "select id from links where card_instance_id = ? and layout_link_to = ?";
+        try {
+            $foundLinks = DB::select($query, [$cardId, $layoutLinkTo]);
+            if(count($foundLinks>0)){
+                return $foundLinks[0]->id;
+            }else{
+                return 0;
+            }
+        }catch (Exception $e){
+            throw new Exception('error '.$e.getMessage().' removing old links from '. $cardId);
+        }
+    }
 
     public function saveLink($orgId, $layoutId, $cardInstanceId, $description, $linkUrl, $isExternal, $layoutLinkTo, $linkType, $thisShowOrder){
         try {
@@ -47,6 +60,7 @@ class link extends Model
             throw $e;
         }
     }
+
 
     public function deleteLink($linkId){
         $query = 'delete from links where id = ?';

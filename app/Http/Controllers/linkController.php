@@ -45,6 +45,31 @@ class linkController extends Controller
             return "Error ".$e;
         }
     }
+    public function addUpdateLink(Request $request){
+        $inData =  $request->all();
+        $thisCardId = $inData['card_instance_id'];
+        $thisOrgId = $inData['org_id'];
+        $thisLayoutId = $inData['layout_id'];
+        $isExternal = $inData['is_external'];
+        $layoutLinkTo = $inData['layout_link_to'];
+        $linkUrl = $inData['linkUrl'];
+        $type= $inData['type'];
+        $thisLinkInstance = new link;
+        $existingLink = $thisLinkInstance->linkExistsInCard($thisCardId, $layoutLinkTo);
+        if($existingLink>0){
+            try {
+                $thisLinkInstance->deleteLink($existingLink);
+            } catch (\Exception $e) {
+                abort(500, 'Could not update link - delete failed: '.$e->getMessage());
+            }
+        }
+        try {
+            $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $thisDescription, $thisLinkUrl, $thisIsExternal, $thisLayoutLinkTo, $linkType, 1);
+            return "ok";
+        } catch (\Exception $e) {
+            abort(500, 'Could not update link - new link insert failed: '.$e->getMessage());
+        }
+    }
     public function getLinkLabel(Request $request){
         $inData = $request->all();
         if(auth()->user()==null){
