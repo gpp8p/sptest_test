@@ -107,7 +107,7 @@ Route::group([
     Route::get('deleteAllowedRegistrant', 'OrgController@deleteAllowedRegistrant')->name('deleteAllowedRegistrant');
     Route::get("allowOpenRegistration", 'OrgController@allowOpenRegistration')->name('allowOpenRegistration');
     Route::get('registrationPermitted', 'OrgController@registrationPermitted')->name('registrationPermitted');
-    Route::get('addUpdateLink', 'linkController@addUpdateLink')->name('addUpdateLink');
+    Route::post('addUpdateLink', 'linkController@addUpdateLink')->name('addUpdateLink');
 
 });
 
