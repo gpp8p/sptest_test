@@ -116,6 +116,16 @@ class SpCard
                 $this->thisCardContent = "<iframe src='".$pdfFileName."' width='100%' height='100%' ></iframe>";
                 break;
             }
+
+            case 'imageCard':{
+
+//                $linkUrl = 'http://localhost/spaces/1/'.thisCardContent['layoutLink'].'.html';
+                  $linkUrl = 'http://localhost/spaces/1/'.$thisCardContent['layoutLink'].'.html';
+//                $this->thisCardContent = array('imageTitle'=>$thisCardContent['imageTitle'], 'layoutLinkUrl'=>$linkUrl);
+                $this->thisCardContent = array('imageTitle'=>$thisCardContent['imageTitle'], 'linkUrl'=>$linkUrl);
+                break;
+            }
+
         }
 
     }

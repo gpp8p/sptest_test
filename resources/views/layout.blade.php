@@ -60,6 +60,7 @@
 
 
 
+
         :root {
             --ck-color-mention-background: hsla(341, 100%, 30%, 0.1);
             --ck-color-mention-text: hsl(341, 100%, 30%);
@@ -531,13 +532,27 @@
                 </div>
                 @break
                 @case('pdf')
-                <div style="{{$thisCard['card_parameters']['style']}}">
-                <span class="cardBody">
-                        {!! $thisCard['card_parameters']['content'] !!}
-                </span>
-                </div>
-                @break
-            @endswitch
+                    <div style="{{$thisCard['card_parameters']['style']}}">
+                    <span class="cardBody">
+                            {!! $thisCard['card_parameters']['content'] !!}
+                    </span>
+                    </div>
+                    @break
+            @case('imageCard')
+            <script>
+                function gotoUrl(url){
+                    debugger;
+                    window.location.href=url;
+                }
+            </script>
+            <div style="{{$thisCard['card_parameters']['style']}}" onclick="gotoUrl('{{$thisCard['card_parameters']['content']['linkUrl']}}')">
+                        <span class="cardBody" >
+                                {!! $thisCard['card_parameters']['content']['imageTitle'] !!}
+                        </span>
+            </div>
+        @break
+        @endswitch
+
         @endforeach
 </div>
 </body>
