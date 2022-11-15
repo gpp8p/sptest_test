@@ -118,11 +118,23 @@ class SpCard
             }
 
             case 'imageCard':{
+                    $icLinkIsPublishable = false;
+                    foreach($publishableLayouts as $thisPublishableLayout){
+                        if($thisPublishableLayout->layout_id == $thisCardContent['layoutLink']){
+                            $icLinkIsPublishable = true;
+                            break;
+                        }
+                    }
+                  if($icLinkIsPublishable){
+                      $linkUrl = $thisConstants->Options['spacesBase'].$orgId.'/'.$thisCardContent['layoutLink'].'.html';
+                  }else{
+                      $linkUrl = $thisConstants->Options['dynamicAddress'].$orgId.'/'.$thisCardContent['layoutLink'].'.html';
+                  }
 
 //                $linkUrl = 'http://localhost/spaces/1/'.thisCardContent['layoutLink'].'.html';
-                  $linkUrl = 'http://localhost/spaces/1/'.$thisCardContent['layoutLink'].'.html';
+//                  $linkUrl = 'http://localhost/spaces/1/'.$thisCardContent['layoutLink'].'.html';
 //                $this->thisCardContent = array('imageTitle'=>$thisCardContent['imageTitle'], 'layoutLinkUrl'=>$linkUrl);
-                $this->thisCardContent = array('imageTitle'=>$thisCardContent['imageTitle'], 'linkUrl'=>$linkUrl);
+                $this->thisCardContent = array('imageTitle'=>$thisCardContent['imageTitle'], 'linkUrl'=>$linkUrl, 'linkPublishable'=>$icLinkIsPublishable);
                 break;
             }
 
