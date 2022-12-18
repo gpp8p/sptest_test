@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Validator;
 use App\User;
 use Response;
+use Illuminate\Support\Facades\Log;
 
 
 class JWTAuthController extends Controller
@@ -37,7 +38,6 @@ class JWTAuthController extends Controller
             'email' => 'required|email|unique:users|max:50',
             'password' => 'required|confirmed|string|min:6',
         ]);
-
         $user = User::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)]
@@ -60,10 +60,14 @@ class JWTAuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
+//        $message = 'login made it to: point A';
+//        Log::debug($message);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+//        $message = 'login made it to: point B';
+//        Log::debug($message);
 
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -71,6 +75,8 @@ class JWTAuthController extends Controller
         $userInstance = new User();
         $userFound = $userInstance->findUserByEmail('GuestUser@nomail.com');
         $guestUserId = $userFound[0]->id;
+//        $message = 'login made it to: point C';
+//        Log::debug($message);
 
 
         $thisUserName = auth()->user()->name;
@@ -79,6 +85,9 @@ class JWTAuthController extends Controller
         $thisOrgInstance = new Org;
         $inData = $request->all();
         $defaultOrg = $inData['default_org'];
+//        $message = 'login made it to: point D';
+//        Log::debug($message);
+
         if(is_numeric($defaultOrg)){
             $orgId = $defaultOrg;
         }else{
@@ -93,6 +102,8 @@ class JWTAuthController extends Controller
                 return response()->json(['error' => 'Unauthorized - not in org'], 401);
             }
         }
+//        $message = 'login made it to: point E';
+//        Log::debug($message);
 
 
 
@@ -103,6 +114,8 @@ class JWTAuthController extends Controller
         }
 //        $defaultOrg = 'root';
 
+//        $message = 'login made it to: point F';
+//        Log::debug($message);
 
 
         $thisLayout = new Layout;
@@ -114,6 +127,8 @@ class JWTAuthController extends Controller
             $noOrgMsg = $defaultOrg.' not known';
             return Response::json(array('resultType'=>$noOrgMsg));
         }
+//        $message = 'login made it to: point G';
+//        Log::debug($message);
 
         return $this->createNewToken($token);
     }

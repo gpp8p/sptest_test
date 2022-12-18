@@ -108,6 +108,7 @@ Route::group([
     Route::get("allowOpenRegistration", 'OrgController@allowOpenRegistration')->name('allowOpenRegistration');
     Route::get('registrationPermitted', 'OrgController@registrationPermitted')->name('registrationPermitted');
     Route::post('addUpdateLink', 'linkController@addUpdateLink')->name('addUpdateLink');
+    Route::get('testOrgRestrict', 'OrgController@testOrgRestrict')->name('testOrgRestrict');
 
 });
 

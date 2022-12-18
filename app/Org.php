@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Org extends Model
 {
@@ -86,8 +87,13 @@ class Org extends Model
         $query = "update org set registration_restricted = ? where id = ?";
         try {
             $rcdsUpdated = DB::select($query, [$registrationRestricted, $orgId]);
+            $message = 'setOrgRestricted rcdsUpdated:';
+            Log::debug($message);
+
             return $rcdsUpdated;
         } catch (Exception $e) {
+            $message = 'setOrgRestricted error:'.$e->getMessage();
+            Log::debug($message);
             throw new Exception('error in setOrgRestricted'.$e->getMessage());
         }
     }

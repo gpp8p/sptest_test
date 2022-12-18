@@ -16,8 +16,8 @@ class Layouts extends Seeder
     public function run()
     {
         $layoutName = "Root Layout";
-        $layoutHeight = 10;
-        $layoutWidth = 10;
+        $layoutHeight = 15;
+        $layoutWidth = 15;
         $layoutDescription = "Initial layout";
         $layoutBackgroundColor = "#f5f4e4";
         $backgroundImage = '';

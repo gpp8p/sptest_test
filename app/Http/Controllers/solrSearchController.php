@@ -36,6 +36,7 @@ class solrSearchController extends Controller
             $message = 'simple query was:'.$thisQuery;
             Log::debug($message);
             $queryResults = $thisSolr->sendQueryToSolr($thisQuery, '');
+
         }else{
             $advancedQuery = json_decode($advancedQueryJson);
             $fqQuery = '';
@@ -111,6 +112,8 @@ class solrSearchController extends Controller
             $queryResults = $thisSolr->sendQueryToSolr($thisQuery, $fqQuery);
         }
         $allResults = '';
+        $message = 'results number found:'.$queryResults->response->numFound;
+        Log::debug($message);
         if($queryResults->response->numFound>0){
             foreach($queryResults->response->docs as $thisQueryResult){
                 $allResults=$allResults.$thisQueryResult->id.',';
@@ -122,6 +125,8 @@ class solrSearchController extends Controller
             $selectedLayouts = [];
         }
         $encodedLayouts = json_encode($selectedLayouts);
+        $message = 'results :'.$encodedLayouts;
+        Log::debug($message);
         return $encodedLayouts;
     }
 }

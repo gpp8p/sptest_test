@@ -83,6 +83,9 @@ class OrgController extends Controller
     }
 
     public function getOrgUsers(Request $request){
+        $message = 'getOrgUsers:';
+        Log::debug($message);
+
         $inData = $request->all();
         $orgId = $inData['orgId'];
         $thisOrg = new Org();
@@ -104,9 +107,16 @@ class OrgController extends Controller
         return json_encode($returnResult);
     }
     public function setOrgRestrict(Request $request){
+        $message = 'At setOrgRestrict:';
+        Log::debug($message);
         $inData = $request->all();
         $orgId = $inData['orgId'];
+        $message = 'setOrgRestrict orgId:'.$orgId;
+        Log::debug($message);
         $restricted = $inData['restricted'];
+        $message = 'setOrgRestrict restrict:'.$restricted;
+        Log::debug($message);
+
         $thisOrg = new Org();
         $rcdsUpdated = $thisOrg->setOrgRestricted($orgId, $restricted);
         return $rcdsUpdated;
