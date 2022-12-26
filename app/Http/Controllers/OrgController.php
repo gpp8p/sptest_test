@@ -201,11 +201,13 @@ class OrgController extends Controller
         }
     }
     public function registrationPermitted(Request $request){
+/*
         if(auth()->user()==null){
             abort(401, 'Unauthorized action.');
         }else{
             $userId = auth()->user()->id;
         }
+*/
         $inData = $request->all();
         $userEmail = $inData['userEmail'];
         $orgId = $inData['orgId'];
@@ -223,11 +225,13 @@ class OrgController extends Controller
 
     }
     public function allowOpenRegistration(Request $request){
+/*
         if(auth()->user()==null){
             abort(401, 'Unauthorized action.');
         }else{
             $userId = auth()->user()->id;
         }
+*/
         $inData = $request->all();
         $orgId = $inData['orgId'];
         $thisOrg = new Org();
