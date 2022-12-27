@@ -701,6 +701,7 @@ class LayoutController extends Controller
         }
         $setTopLayout = 0;
         $personalGroupId = $thisGroup->returnPersonalGroupId($userId);
+//  !! possibly problem here
 //        $parentLayoutGroupId = $thisGroup->getLayoutGroupId($templateId);
         $parentLayoutGroupId = $thisGroup->getLayoutGroupId($layoutId);
         if($parentLayoutGroupId<0){
@@ -735,15 +736,22 @@ class LayoutController extends Controller
             $layoutGroupPerms = $layoutInstance->getLayoutGroupPerms($layoutId, $parentLayoutGroupId);
             $allUserGroupPerms = $layoutInstance->getAllUserGroupPerms($layoutId, $allUserGroupId);
             $personalGroupPerms = $layoutInstance->getPersonalGroupPerms($layoutId, $personalGroupId);
+            if(gettype($personalGroupPerms)!= 'object'){
+                $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'view', 1);
+                $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'author', 1);
+                $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'admin', 1);
+//                $personalGroupPerms = $layoutInstance->getPersonalGroupPerms($layoutId, $personalGroupId);
+            }else{
+                $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'view', $personalGroupPerms->view);
+                $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'author', $personalGroupPerms->author);
+                $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'admin', $personalGroupPerms->admin);
+            }
             $layoutInstance->editPermForGroup($parentLayoutGroupId, $newLayoutId, 'view', $layoutGroupPerms->view);
             $layoutInstance->editPermForGroup($parentLayoutGroupId, $newLayoutId, 'author', $layoutGroupPerms->author);
             $layoutInstance->editPermForGroup($parentLayoutGroupId, $newLayoutId, 'admin', $layoutGroupPerms->admin);
             $layoutInstance->editPermForGroup($allUserGroupId, $newLayoutId, 'view', $allUserGroupPerms->view);
             $layoutInstance->editPermForGroup($allUserGroupId, $newLayoutId, 'author', $allUserGroupPerms->author);
             $layoutInstance->editPermForGroup($allUserGroupId, $newLayoutId, 'admin', $allUserGroupPerms->admin);
-            $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'view', $personalGroupPerms->view);
-            $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'author', $personalGroupPerms->author);
-            $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'admin', $personalGroupPerms->admin);
         }
         $cardInstance = new CardInstances;
         $thisInstanceParams = new InstanceParams;
