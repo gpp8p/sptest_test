@@ -557,7 +557,17 @@ class Layout extends Model
         $returnData = array('cards' => $allCardInstances, 'layout' => $layoutProperties, 'perms' => $thisLayoutPerms);
         return $returnData;
     }
-
+/*
+    public function getCardInLayoutDimensions($cardInstanceId, $layoutId){
+        $query = "select row, column, height, width from card_inLayout where  card_instance_id = ? and layout_id = ?";
+        try {
+            $cardDimensions = DB::select($query, [$cardInstanceId, $layoutId]);
+            return $cardDimensions;
+        } catch (\Exception $e) {
+            throw new Exception('error getting card in layout dimensionsl'.$e->getMessage());
+        }
+    }
+*/
     public function setBackgroundUrl($backgroundUrl, $layoutId){
         $query = 'update layouts set backgroundUrl = ? where id = ?';
         try {

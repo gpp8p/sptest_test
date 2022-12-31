@@ -791,7 +791,7 @@ class LayoutController extends Controller
                 case 'linkMenu':{
 
                     try {
-                        $cardInstance->insertCard($thisCard['id'], $newLayoutId);
+                        $cardInstance->insertCardReference($thisCard['id'], $newLayoutId, $templateId);
                     } catch (Exception $e) {
                         $msg = 'Could not insert card:'.$e->getMessage();
                         abort(500, $msg);
@@ -802,7 +802,7 @@ class LayoutController extends Controller
                 case 'NavigationMenu':{
                     if($copyIt){
                         try {
-                            $cardInstance->insertCard($thisCard['id'], $newLayoutId);
+                            $cardInstance->insertCardReference($thisCard['id'], $newLayoutId, $templateId);
                         } catch (Exception $e) {
                             $msg = 'Could not insert card:'.$e->getMessage();
                             abort(500, $msg);
@@ -837,7 +837,7 @@ class LayoutController extends Controller
                 }
                 case 'Headline':{
                     try {
-                        $cardInstance->insertCard($thisCard['id'], $newLayoutId);
+                        $cardInstance->insertCardReference($thisCard['id'], $newLayoutId, $templateId);
                     } catch (Exception $e) {
                         $msg = 'Could not insert card:'.$e->getMessage();
                         abort(500, $msg);

@@ -245,6 +245,26 @@ class CardInstances extends Model
 
 
     }
+    public function insertCardReference($cardId, $toLayoutId, $fromLayoutId){
+        $query = "select row, col, height, width from card_in_layout where  card_instance_id = ? and layout_id = ?";
+        try {
+            $cardData = DB::select($query, [$cardId, $fromLayoutId]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+        $newCardLayoutId = DB::table('card_in_layout')->insertGetId([
+            'col'=>$cardData[0]->col,
+            'row'=>$cardData[0]->row,
+            'height'=>$cardData[0]->height,
+            'width'=>$cardData[0]->width,
+            'card_instance_id'=>$cardId,
+            'layout_id'=>$toLayoutId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+
+    }
 
     public function getCardTypeById($cardId){
         $query = "select card_component from card_instances where id = ?";
