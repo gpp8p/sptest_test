@@ -66,12 +66,34 @@ class SpRichTextCard
         $wierdCharacters = chr(226).chr(128).chr(147);
         $wierdCharacters2 = chr(226).chr(128).chr(153);
         $textOut = $this->contentIn;
+/*
+        $testTextOut = $this->contentIn;
+        $testNeedle = $wierdCharacters;
+        $garbagePresent = str_contains($testTextOut, $testNeedle);
+*/
         $this->contentIn = str_replace($wierdCharacters,'-', $textOut);
+/*
+        $testTextOut = $this->contentIn;
+        $testNeedle = $wierdCharacters;
+        $garbagePresent = str_contains($testTextOut, $testNeedle);
+*/
+        $textOut = $this->contentIn;
         $this->contentIn = str_replace($wierdCharacters2,"'", $textOut);
         $this->content = $this->contentIn;
+/*
+        $testTextOut = $this->content;
+        $testNeedle = chr(226).chr(128).chr(147);
+        $garbagePresent = str_contains($testTextOut, $testNeedle);
+*/
     }
     public function getCardContent(){
+/*
+        $testTextOut = $this->content;
+        $testNeedle = chr(226).chr(128).chr(147);
+        $garbagePresent = str_contains($testTextOut, $testNeedle);
+*/
         return array('cardText'=>$this->content);
+
     }
 
 

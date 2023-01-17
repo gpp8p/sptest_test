@@ -53,6 +53,11 @@ class SpCard
             case "RichText":{
                 $thisSpRichTextCard = new SpRichTextCard($this->thisCardId, $orgId, $publishableLayouts, $thisCardContent );
                 $this->thisCardContent = $thisSpRichTextCard->getCardContent();
+/*
+                $testTextOut = $this->thisCardContent['cardText'];
+                $testNeedle = chr(226).chr(128).chr(147);
+                $garbagePresent = str_contains($testTextOut, $testNeedle);
+*/
                 break;
             }
             case "Headline":{

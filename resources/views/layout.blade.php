@@ -4,8 +4,8 @@
     <style>
         .cardStyle {
             height: 100%;
-            width: 100%;
-            overflow: auto;
+            width: 98%;
+            overflow: hidden;
         }
         .cardHeader {
             color: blue;

@@ -7,6 +7,7 @@ use App\Org;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Controller;
 use Validator;
 use App\User;
@@ -38,6 +39,8 @@ class JWTAuthController extends Controller
             'email' => 'required|email|unique:users|max:50',
             'password' => 'required|confirmed|string|min:6',
         ]);
+
+
         $user = User::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)]

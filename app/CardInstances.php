@@ -246,7 +246,7 @@ class CardInstances extends Model
 
     }
     public function insertCardReference($cardId, $toLayoutId, $fromLayoutId){
-        $query = "select row, col, height, width from card_in_layout where  card_instance_id = ? and layout_id = ?";
+        $query = "select `row`, col, height, width from card_in_layout where  card_instance_id = ? and layout_id = ?";
         try {
             $cardData = DB::select($query, [$cardId, $fromLayoutId]);
         } catch (\Exception $e) {

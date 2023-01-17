@@ -78,8 +78,11 @@ class LayoutController extends Controller
             $layoutBackgroundColor = '';
         }else{
             $backgroundImage = '';
-            $layoutBackgroundColor = $inData['backgroundColor'];
-
+            if(!isset($inData['backgroundColor'])){
+                $layoutBackgroundColor = "#dbddb0'";
+            }else{
+                $layoutBackgroundColor = $inData['backgroundColor'];
+            }
             $backgroundDisplay='';
         }
         if($template){
@@ -399,7 +402,7 @@ class LayoutController extends Controller
         }
 
         foreach($viewableLayouts as $thisViewableLayout){
-            if($thisViewableLayout->layout_id==85){
+            if($thisViewableLayout->layout_id==94){
                 $a=0;
             }
             if($thisLayoutInstance->isDeleted($thisViewableLayout->layout_id)) continue;
@@ -451,6 +454,11 @@ class LayoutController extends Controller
                             }
                         }
             */
+//            if($thisViewableLayout->layout_id==94){
+//                $testTextOut = $layoutData['cards'][2]['card_parameters']['content']['cardText'];
+//                $testNeedle = chr(226).chr(128).chr(147);
+//                $garbagePresent = str_contains($testTextOut, $testNeedle);
+//            }
             try {
                 $viewHtml = view('layout', ['layoutId' => $thisViewableLayout, 'layoutCss' => $thisLayoutCss, 'hzLinkMenuColor'=>$hzLinkMenuColor, 'orgId'=>$orgId, 'cards' => $layoutData['cards']])->render();
             } catch (\Throwable $e) {
