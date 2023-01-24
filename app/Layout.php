@@ -183,7 +183,18 @@ class Layout extends Model
         }
     }
 
-    public function getViewableLayoutIds($userId, $orgId){
+    public function getAllUserAccessibleLayouts($allUserGroupId){
+        $query = "select layouts.id, layouts.menu_label, layouts.description, layouts.menu_label, layouts.height, layouts.width from layouts ".
+            "where layouts.id in ( select distinct layout_id from perms where group_id = ? and view = 1)";
+        try {
+            $retrievedLayouts = DB::select($query, [$allUserGroupId]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+        return $retrievedLayouts;
+    }
+
+    public function getViewableLayoutIds($allUserGroupId){
 
 
         $query = "select layouts.id, layouts.menu_label, layouts.description, layouts.menu_label, layouts.height, layouts.width from layouts ".

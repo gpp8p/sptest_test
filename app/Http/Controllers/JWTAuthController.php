@@ -117,21 +117,22 @@ class JWTAuthController extends Controller
         }
 //        $defaultOrg = 'root';
 
-//        $message = 'login made it to: point F';
+//        $message = 'login ';
 //        Log::debug($message);
 
 
         $thisLayout = new Layout;
         $loginPerms = $thisLayout->summaryPermsForLayout($thisUserId,$orgInfo[0]->id,$orgInfo[0]->top_layout_id);
         if(count($orgInfo)>0){
+            $message = 'login by '.$thisUserName;
+            Log::debug($message);
             return Response::json(array('resultType'=>'Ok', 'userName'=>$thisUserName, 'orgId'=>$orgInfo[0]->id, 'orgHome'=>$orgInfo[0]->top_layout_id, 'loginPerms'=>$loginPerms, 'userId'=>$thisUserId, 'is_admin'=>$thisUserIsAdmin, 'access_token' => $token, 'token_type' => 'bearer', 'expires_in' => auth('api')->factory()->getTTL() * 60));
 //            return Response::json(array('resultType'=>'Ok', 'userName'=>$thisUserName, 'orgId'=>$orgInfo[0]->id, 'orgHome'=>$orgInfo[0]->top_layout_id, 'loginPerms'=>$loginPerms, 'userId'=>$thisUserId, 'is_admin'=>$thisUserIsAdmin, 'access_token' => $token, 'token_type' => 'bearer', 'expires_in' => auth()->factory()->getTTL() * 600));
         }else{
             $noOrgMsg = $defaultOrg.' not known';
             return Response::json(array('resultType'=>$noOrgMsg));
         }
-//        $message = 'login made it to: point G';
-//        Log::debug($message);
+
 
         return $this->createNewToken($token);
     }

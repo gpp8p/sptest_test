@@ -151,6 +151,8 @@ class LayoutController extends Controller
                 $layoutInstance->editPermForGroup($personalGroupId, $newLayoutId, 'admin', $personalGroupPerms->admin);
             }
         }
+        $message = 'createLayoiutNoBlanks by '.$userId."-".$newLayoutId;
+        Log::debug($message);
 
 
         return json_encode($newLayoutId);
@@ -370,7 +372,8 @@ class LayoutController extends Controller
 
         $thisLayoutInstance = new Layout;
 //        $returnedLayouts = $thisLayoutInstance->getPublishableLayoutsForOrg($orgId, $allUserGroupId);
-        $returnedLayouts = $thisLayoutInstance->getViewableLayoutIds($userId, $orgId);
+//        $returnedLayouts = $thisLayoutInstance->getViewableLayoutIds($userId, $orgId);
+        $returnedLayouts = $thisLayoutInstance->getAllUserAccessibleLayouts($allUserGroupId);
 //        $viewableLayouts=array();
         if(count($returnedLayouts)==0){
             abort(500, 'no viewable layouts for this org');

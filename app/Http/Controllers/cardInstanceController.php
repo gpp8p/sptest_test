@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Exception;
 use Storage;
 use File;
+use Illuminate\Support\Facades\Log;
 
 
 class cardInstanceController extends Controller
@@ -176,6 +177,9 @@ class cardInstanceController extends Controller
         $userId = $inData['userId'];
         $layoutInstance = new Layout;
         $thisLayoutData = $layoutInstance->getThisLayout($layoutId, $orgId, $userId);
+        $message = 'layout '.$layoutId.' requested by '.$userId;
+        Log::debug($message);
+
         $encodedData = json_encode($thisLayoutData);
         return $encodedData;
     }
