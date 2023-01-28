@@ -373,7 +373,7 @@ class LayoutController extends Controller
         $thisLayoutInstance = new Layout;
 //        $returnedLayouts = $thisLayoutInstance->getPublishableLayoutsForOrg($orgId, $allUserGroupId);
 //        $returnedLayouts = $thisLayoutInstance->getViewableLayoutIds($userId, $orgId);
-        $returnedLayouts = $thisLayoutInstance->getAllUserAccessibleLayouts($allUserGroupId);
+        $returnedLayouts = $thisLayoutInstance->getAllUserAccessibleLayouts($allUserGroupId, $orgId);
 //        $viewableLayouts=array();
         if(count($returnedLayouts)==0){
             abort(500, 'no viewable layouts for this org');
@@ -381,7 +381,7 @@ class LayoutController extends Controller
         $orgLayouts = '';
         foreach($returnedLayouts as $thisLayout){
 //            array_push($viewableLayouts, $thisLayout->layout_id);
-            $orgLayouts = $orgLayouts.$thisLayout->id.',';
+            $orgLayouts = $orgLayouts.$thisLayout->layout_id.',';
         }
         $orgLayouts = substr($orgLayouts,0,(strlen($orgLayouts)-1));
         try {
@@ -405,7 +405,7 @@ class LayoutController extends Controller
         }
 
         foreach($viewableLayouts as $thisViewableLayout){
-            if($thisViewableLayout->layout_id==94){
+            if($thisViewableLayout->layout_id==215){
                 $a=0;
             }
             if($thisLayoutInstance->isDeleted($thisViewableLayout->layout_id)) continue;

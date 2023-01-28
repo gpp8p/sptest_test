@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Classes\SpCard;
 use App\Classes\SpRichTextCard;
+use App\Group;
 use Storage;
 use File;
 use App\Classes\Constants;
@@ -183,18 +184,26 @@ class Layout extends Model
         }
     }
 
-    public function getAllUserAccessibleLayouts($allUserGroupId){
-        $query = "select layouts.id, layouts.menu_label, layouts.description, layouts.menu_label, layouts.height, layouts.width from layouts ".
+    public function getAllUserAccessibleLayouts($allUserGroupId, $orgId){
+/*        $query = "select layouts.id, layouts.menu_label, layouts.description, layouts.menu_label, layouts.height, layouts.width from layouts ".
             "where layouts.id in ( select distinct layout_id from perms where group_id = ? and view = 1)";
+*/
+        $query = "select distinct layout_id from perms,groups,grouporg ".
+        "where groups.id = ? ".
+        "and perms.group_id = groups.id ".
+        "and grouporg.group_id = groups.id ".
+        "and grouporg.org_id = ? ".
+        "and perms.view = 1";
+
         try {
-            $retrievedLayouts = DB::select($query, [$allUserGroupId]);
+            $retrievedLayouts = DB::select($query, [$allUserGroupId, $orgId]);
         } catch (\Exception $e) {
             throw $e;
         }
         return $retrievedLayouts;
     }
 
-    public function getViewableLayoutIds($allUserGroupId){
+    public function getViewableLayoutIds($orgId, $userId){
 
 
         $query = "select layouts.id, layouts.menu_label, layouts.description, layouts.menu_label, layouts.height, layouts.width from layouts ".
@@ -563,8 +572,18 @@ class Layout extends Model
         }else{
             $thisLayoutPerms = array('view'=>true, 'author'=>true, 'admin'=>true, 'opt1'=>true, 'opt2'=>true, 'opt3'=>true);
         }
+
+        $thisGroup = new Group;
+        $lg = $thisGroup->getLayoutGroupId($layoutId);
+        if($lg<0){
+            $isLayoutGroup = 0;
+        }else{
+            $isLayoutGroup = 1;
+        }
+
+
         $thisLayoutPerms = $layoutInstance->summaryPermsForLayout($userId, $orgId, $layoutId);
-        $layoutProperties = array('description' => $thisLayoutDescription, 'menu_label' => $thisLayoutLabel, 'height' => $thisLayoutHeight, 'width' => $thisLayoutHeight, 'backgroundColor' => $thisLayoutBackgroundColor, 'backgroundImageUrl' => $thisLayoutImageUrl, 'backgroundType' => $thisLayoutBackgroundType, 'template'=>$thisLayoutTemplate );
+        $layoutProperties = array('description' => $thisLayoutDescription, 'menu_label' => $thisLayoutLabel, 'height' => $thisLayoutHeight, 'width' => $thisLayoutHeight, 'backgroundColor' => $thisLayoutBackgroundColor, 'backgroundImageUrl' => $thisLayoutImageUrl, 'backgroundType' => $thisLayoutBackgroundType, 'template'=>$thisLayoutTemplate, 'isLayoutGroup'=>$isLayoutGroup );
         $returnData = array('cards' => $allCardInstances, 'layout' => $layoutProperties, 'perms' => $thisLayoutPerms);
         return $returnData;
     }
