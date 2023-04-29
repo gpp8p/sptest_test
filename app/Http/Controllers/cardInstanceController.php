@@ -9,6 +9,7 @@ use App\InstanceParams;
 use App\Layout;
 use App\link;
 use App\Org;
+use App\Group;
 use App\Solr;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -179,6 +180,21 @@ class cardInstanceController extends Controller
         $thisLayoutData = $layoutInstance->getThisLayout($layoutId, $orgId, $userId);
         $message = 'layout '.$layoutId.' requested by '.$userId;
         Log::debug($message);
+//        commented out until testing
+
+        $thisGroupInstance = new Group;
+        try {
+            $regGroupId = $thisGroupInstance->findRegisteredUsersGroup($orgId);
+            $regRcds = $thisGroupInstance->isRegisterationGroupRecord($layoutId, $regGroupId);
+            if($regRcds==0){
+                $layoutInstance->editPermForGroup($regGroupId, $layoutId, 'view', 1);
+                $layoutInstance->editPermForGroup($regGroupId, $layoutId, 'author', 0);
+                $layoutInstance->editPermForGroup($regGroupId, $layoutId, 'admin', 0);
+            }
+        } catch (\Exception $e) {
+            $message = 'could not establis reg group for layout '.$layoutId;
+            Log::debug($message);
+        }
 
         $encodedData = json_encode($thisLayoutData);
         return $encodedData;

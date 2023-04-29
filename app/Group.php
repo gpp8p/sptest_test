@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Group extends Model
 {
@@ -145,6 +146,37 @@ class Group extends Model
         $query = "select id from `groups` where description='All Users'";
         $allUserGroupId  =  DB::select($query);
         return $allUserGroupId[0]->id;
+    }
+    public function findRegisteredUsersGroup($orgId){
+        $query = "select org_label from `org` where id = ?";
+        try {
+            $thisOrgLabel = DB::select($query, [$orgId]);
+        } catch (\Exception $e) {
+            $message = 'org label query failed query was was:'.$query;
+            Log::debug($message);
+            throw $e;
+        }
+        $thisGroupLabel ="reg users ".$thisOrgLabel[0]->org_label;
+        $query = "select id from `groups` where group_label=?";
+        try {
+            $thisRegisteredUsersGroupId = DB::select($query, [$thisGroupLabel]);
+        } catch (\Exception $e) {
+            $message = 'registered users query failed query was was:'.$query;
+            Log::debug($message);
+            throw $e;
+        }
+        return $thisRegisteredUsersGroupId[0]->id;
+    }
+    public function isRegisterationGroupRecord($layoutId, $registrationGroupId){
+        $query = "select id from perms where layout_id = ? and group_id = ?";
+        try {
+            $regRcds = DB::select($query, [$layoutId, $registrationGroupId]);
+        } catch (\Exception $e) {
+            $message = 'registration group record query failed query was was:'.$query;
+            Log::debug($message);
+            throw $e;
+        }
+        return count($regRcds);
     }
 
     public function findOrgGroups($orgId){

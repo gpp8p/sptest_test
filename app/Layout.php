@@ -188,7 +188,7 @@ class Layout extends Model
 /*        $query = "select layouts.id, layouts.menu_label, layouts.description, layouts.menu_label, layouts.height, layouts.width from layouts ".
             "where layouts.id in ( select distinct layout_id from perms where group_id = ? and view = 1)";
 */
-        $query = "select distinct layout_id from perms,groups,grouporg ".
+        $query = "select distinct layout_id from perms,`groups`,grouporg ".
         "where groups.id = ? ".
         "and perms.group_id = groups.id ".
         "and grouporg.group_id = groups.id ".
@@ -226,6 +226,30 @@ class Layout extends Model
         return $retrievedLayouts;
 
     }
+    public function getMyViewableLayoutIds($orgId, $userId){
+
+
+        $query = "select layouts.id, layouts.menu_label, layouts.description, layouts.menu_label, layouts.height, layouts.width from layouts ".
+            "where layouts.id in ( ".
+                "select distinct layouts.id from layouts, `groups`, usergroup, users, userorg, org, perms ".
+                "where perms.layout_id = layouts.id ".
+                "and layouts.deleted != 'Y' ".
+                "and perms.group_id = groups.id ".
+                "and usergroup.group_id = groups.id ".
+                "and usergroup.user_id = users.id ".
+                "and userorg.user_id = users.id ".
+                "and userorg.org_id = org.id ".
+                "and perms.view=1 ".
+                "and org.id = ? ".
+                "and users.id= ? ".
+            ")";
+
+        $retrievedLayouts  =  DB::select($query, [$orgId, $userId]);
+        return $retrievedLayouts;
+
+    }
+
+
     public function getDeletedLayoutIds($userId, $orgId){
 
 

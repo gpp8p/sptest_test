@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Layout;
 use App\Org;
 use Illuminate\Http\Request;
-
+use App\Group;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
@@ -116,9 +116,31 @@ class JWTAuthController extends Controller
             $orgInfo = $thisOrgInstance->getOrgHome($defaultOrg);
         }
 //        $defaultOrg = 'root';
+// commented out moved to get layout by id
 
+        $thisGroupInstance = new Group;
+        $userInRegisteredUsers=false;
+        try {
+            $thisRegistreredUsersGroup = $thisGroupInstance->findRegisteredUsersGroup($orgInfo[0]->id);
+            $usersInRegisteredUsersGroup = $thisGroupInstance->getUsersInGroup($thisRegistreredUsersGroup);
+            foreach($usersInRegisteredUsersGroup as $thisRegisteredUser){
+                if($thisRegisteredUser->id==$thisUserId){
+                    $userInRegisteredUsers=true;
+                    break;
+                }
+            }
+            if(!$userInRegisteredUsers && $thisUserId!=$guestUserId){
+                $thisGroupInstance->addUserToGroup($thisUserId,$thisRegistreredUsersGroup,false);
+            }
+        } catch (\Exception $e) {
+            $message = 'Exception '.$e."adding user ".$thisUserId." to registered users group";
+            Log::debug($message);
+
+        }
 //        $message = 'login ';
 //        Log::debug($message);
+
+
 
 
         $thisLayout = new Layout;

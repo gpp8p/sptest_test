@@ -298,7 +298,7 @@ class Layout extends Model
 
     public function getUserPermsForLayout($layoutId, $orgId, $userId){
 /*
-        $query = "select groups.description, groups.id, perms.view, perms.author, perms.admin, perms.opt1, perms.opt2, perms.opt3 from groups, perms, users, usergroup, userorg, org ".
+        $query = "select groups.description, groups.id, perms.view, perms.author, perms.admin, perms.opt1, perms.opt2, perms.opt3 from `groups`, perms, users, usergroup, userorg, org ".
                 "where groups.id = perms.group_id ".
                 "and usergroup.group_id = groups.id ".
                 "and usergroup.user_id = users.id ".

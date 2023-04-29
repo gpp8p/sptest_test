@@ -287,7 +287,8 @@ class LayoutController extends Controller
         $orgId = $inData['orgId'];
 //        $userId = $inData['userId'];
         $thisLayout = new Layout;
-        $viewableLayouts = $thisLayout->getViewableLayoutIds($userId, $orgId);
+//        $viewableLayouts = $thisLayout->getViewableLayoutIds($orgId, $userId);
+        $viewableLayouts = $thisLayout->getMyViewableLayoutIds($orgId, $userId);
         return json_encode($viewableLayouts);
     }
 
