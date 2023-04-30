@@ -404,6 +404,20 @@ class OrgController extends Controller
              } catch (\Exception $e) {
                  throw $e;
              }
+             $regGroupLabel = 'reg users '.$name;
+             $regGroupDescription = 'reg users '.$name;
+             $regGroupId=0;
+             try {
+                 $registrationGroupId = $thisGroup->addNewGroup($regGroupLabel, $regGroupDescription);
+                 $thisGroup->addOrgToGroup($newOrgId, $registrationGroupId);
+                 $thisGroup->addUserToGroup($adminUserId,$registrationGroupId,false);
+             } catch (\Exception $e) {
+                 $message = 'Exception '.$e."adding registration group for org ".$newOrgId." to registered users group";
+                 Log::debug($message);
+                 throw $e;
+             }
+
+
              try {
                  $layoutInstance->editPermForGroup($newLayoutGroupId, $newLayoutId, 'view', 1);
              } catch (\Exception $e) {
