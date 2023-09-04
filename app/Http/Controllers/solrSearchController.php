@@ -20,10 +20,10 @@ class solrSearchController extends Controller
         $inData =  $request->all();
         $orgId = $inData['orgId'];
         if($thisConstants->Options['runContext']=='local'){
-            $thisQuery = $inData['query'];
+            $thisQuery = $inData['query'].'&rows=500';
         }else{
             if(strlen($inData['query'])>0){
-                $thisQuery = 'attr_content:'.$inData['query'];
+                $thisQuery = 'attr_content:'.$inData['query'].'&rows=500' ;
             }else{
                 $thisQuery = 'attr_content:'.'*.*';
             }
