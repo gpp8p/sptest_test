@@ -367,12 +367,35 @@ class cardInstanceController extends Controller
         return $layoutId;
     }
 
+    public function saveCardAndConfiguration(Request $request){
+        $inData =  $request->all();
+        $decodedPost = json_decode($inData['cardParams']);
+        $layoutId = $inData['layoutId'];
+        $cardTitle = $inData['cardTitle'];
+        $restricted = $inData['restricted'];
+        $cardType = $inData['cardType'];
+        $topLeftRow = $inData['topLeftRow'];
+        $topLeftCol = $inData['topLeftCol'];
+        $bottomRightRow = $inData['bottomRightRow'];
+        $bottomRightCol = $inData['bottomRightCol'];
+        $thisCardInstance = new CardInstances();
+        $cardWidth = ($bottomRightCol-$topLeftCol)+1;
+        $cardHeight = ($bottomRightRow-$topLeftRow)+1;
+        $newCardId = $thisCardInstance->createNewCardInstance($layoutId, $topLeftRow,$topLeftCol, $cardHeight, $cardWidth,$cardType, $cardTitle, $restricted);
+        $decodedPost[0]=$newCardId;
+        $this->doSaveCardParameters($decodedPost);
+
+        return "ok";
+    }
     public function saveCardParameters(Request $request){
         $inData =  $request->all();
         $decodedPost = json_decode($inData['cardParams']);
-        $domElements = $decodedPost[3];
-        $thisInstanceParams = new InstanceParams;
+        $this->doSaveCardParameters($decodedPost);
+    }
 
+    public function doSaveCardParameters($decodedPost){
+        $thisInstanceParams = new InstanceParams;
+        $domElements = $decodedPost[3];
         DB::table('instance_params')->where('card_instance_id', '=', $decodedPost[0])->sharedLock()->get();
         $query = "delete from instance_params where card_instance_id = ? and isCss = 1 and dom_element = 'main'";
         DB::beginTransaction();

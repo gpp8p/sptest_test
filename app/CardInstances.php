@@ -144,6 +144,41 @@ class CardInstances extends Model
 
     }
 
+    public function createNewCardInstance($layoutId, $row, $column, $height, $width, $cardType, $cardName, $restricted){
+
+
+        $viewType = ViewType::where('view_type_label', 'Web Browser')->first()->id;
+
+        $newCardInstanceId =DB::table('card_instances')->insertGetId([
+            'col'=>$column,
+            'row'=>$row,
+            'height'=>$height,
+            'width'=>$width,
+            'layout_id'=>$layoutId,
+            'card_component'=>$cardType,
+            'view_type_id'=>$viewType,
+            'card_component'=>$cardType,
+            'card_name'=>$cardName,
+            'restricted'=>$restricted,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        $newCardLayoutId = DB::table('card_in_layout')->insertGetId([
+            'col'=>$column,
+            'row'=>$row,
+            'height'=>$height,
+            'width'=>$width,
+            'card_instance_id'=>$newCardInstanceId,
+            'layout_id'=>$layoutId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        return $newCardInstanceId;
+
+    }
+
+
     public function updateElementStyles($elementParams, $cardInstanceId){
         $thisInstanceParams = new InstanceParams;
         $domElementKeys = array_keys($elementParams);

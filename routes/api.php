@@ -109,6 +109,7 @@ Route::group([
     Route::get('registrationPermitted', 'OrgController@registrationPermitted')->name('registrationPermitted');
     Route::post('addUpdateLink', 'linkController@addUpdateLink')->name('addUpdateLink');
     Route::get('testOrgRestrict', 'OrgController@testOrgRestrict')->name('testOrgRestrict');
+    Route::post('saveCardAndConfiguration','cardInstanceController@saveCardAndConfiguration')->name('saveCardAndConfiguration');
 
 });
 
