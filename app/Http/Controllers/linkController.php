@@ -77,6 +77,31 @@ class linkController extends Controller
             abort(500, 'Could not update link - new link insert failed: '.$e->getMessage());
         }
     }
+
+    public function addNewLink(Request $request){
+        $inData =  $request->all();
+        $thisCardId = $inData['card_instance_id'];
+        $thisOrgId = $inData['org_id'];
+        $thisLayoutId = $inData['layout_id'];
+        $isExternal = $inData['is_external'];
+        $linkUrl = $inData['linkUrl'];
+        $type= $inData['type'];
+        $linkDescription = $inData['description'];
+        $showOrder = $inData['insertPoint'];
+        $addInsert = $inData['addInsert'];
+        $thisLinkInstance = new link;
+
+        $currentCardLinks = $thisLinkInstance->getLinksForCardId($thisCardId);
+        if($addInsert=='add'){
+            $nextShowOrderValue = count($currentCardLinks)+1;
+            $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $linkDescription, $linkUrl, $isExternal, 0, 'U', $nextShowOrderValue);
+        }
+
+        return "ok";
+
+    }
+
+
     public function getLinkLabel(Request $request){
         $inData = $request->all();
         if(auth()->user()==null){

@@ -55,7 +55,10 @@ class link extends Model
                 'updated_at' => \Carbon\Carbon::now(),
                 'show_order' => $thisShowOrder
             ]);
-            $thisLayout->setUnDelete($layoutLinkTo);
+            if($layoutLinkTo>0){
+                $thisLayout->setUnDelete($layoutLinkTo);
+            }
+
         } catch (\Exception $e) {
             throw $e;
         }

@@ -110,6 +110,6 @@ Route::group([
     Route::post('addUpdateLink', 'linkController@addUpdateLink')->name('addUpdateLink');
     Route::get('testOrgRestrict', 'OrgController@testOrgRestrict')->name('testOrgRestrict');
     Route::post('saveCardAndConfiguration','cardInstanceController@saveCardAndConfiguration')->name('saveCardAndConfiguration');
-
+    Route::post('addNewLink', 'linkController@addNewLink')->name('addNewLink');
 });
 
