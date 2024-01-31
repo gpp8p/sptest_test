@@ -111,5 +111,7 @@ Route::group([
     Route::get('testOrgRestrict', 'OrgController@testOrgRestrict')->name('testOrgRestrict');
     Route::post('saveCardAndConfiguration','cardInstanceController@saveCardAndConfiguration')->name('saveCardAndConfiguration');
     Route::post('addNewLink', 'linkController@addNewLink')->name('addNewLink');
+    Route::get('countMySpaces','LayoutController@countMySpaces')->name('countMySpaces');
+    Route::get('getMySpacesPaged','LayoutController@getMySpacesPaged')->name('countMySpaces');
 });
 

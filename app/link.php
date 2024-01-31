@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class link extends Model
 {
     public function getLinksForCardId($cardId){
-        $query = "select id, isExternal, link_url, layout_link_to, description, type from links where card_instance_id = ? order by show_order";
+        $query = "select id, isExternal, link_url, layout_link_to, description, type, show_order from links where card_instance_id = ? order by show_order";
         try {
             $linkInfo = DB::select($query, [$cardId]);
             return $linkInfo;
@@ -22,6 +22,14 @@ class link extends Model
             DB::select($query, [$cardId, $linkType]);
         }catch (Exception $e){
             throw new Exception('error '.$e.getMessage().' removing old links from '. $cardId);
+        }
+    }
+    public function updateShowOrder($cardId, $newShowOrder, $linkId){
+        $query = 'update links set show_order = ? where card_instance_id = ? and id = ?';
+        try {
+            DB::select($query, [$newShowOrder, $cardId, $linkId]);
+        }catch (Exception $e){
+            throw new Exception('error '.$e.getMessage().' updating show_order in links from '. $cardId);
         }
     }
     public function linkExistsInCard($cardId, $layoutLinkTo){

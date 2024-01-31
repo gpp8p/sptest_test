@@ -291,6 +291,37 @@ class LayoutController extends Controller
         $viewableLayouts = $thisLayout->getMyViewableLayoutIds($orgId, $userId);
         return json_encode($viewableLayouts);
     }
+    public function getMySpacesPaged(Request $request){
+//        $token = $request->bearerToken();
+        if(auth()->user()==null){
+            abort(401, 'Unauthorized action.');
+        }else{
+            $userId = auth()->user()->id;
+        }
+
+        $inData =  $request->all();
+        $orgId = $inData['orgId'];
+        $limit = $inData['limit'];
+        $offset = $inData['offset'];
+        $thisLayout = new Layout;
+        $viewableLayouts = $thisLayout->getMyViewableLayoutIdsPaged($orgId, $userId,  $limit, $offset);
+        return json_encode($viewableLayouts);
+    }
+
+    public function countMySpaces(Request $request){
+//        $token = $request->bearerToken();
+        if(auth()->user()==null){
+            abort(401, 'Unauthorized action.');
+        }else{
+            $userId = auth()->user()->id;
+        }
+
+        $inData =  $request->all();
+        $orgId = $inData['orgId'];
+        $thisLayout = new Layout;
+        $viewableLayoutCount = $thisLayout->getViewableLayoutCount($orgId, $userId);
+        return $viewableLayoutCount;
+    }
 
     public function getMyDeletedSpaces(Request $request){
 

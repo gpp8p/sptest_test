@@ -95,6 +95,27 @@ class linkController extends Controller
         if($addInsert=='add'){
             $nextShowOrderValue = count($currentCardLinks)+1;
             $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $linkDescription, $linkUrl, $isExternal, 0, 'U', $nextShowOrderValue);
+        }else{
+            $currentCardLinks=$thisLinkInstance->getLinksForCardId($thisCardId);
+//            $showOrder+=1;
+            $linkOrderAt = 1;
+            $insertDone=false;
+            try {
+                foreach ($currentCardLinks as $thisLink) {
+                    if($thisLink->show_order == $showOrder) {
+                        $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $linkDescription, $linkUrl, $isExternal, 0, 'U', $linkOrderAt);
+                        $insertDone = true;
+//                        $linkOrderAt+=1;
+                    }else{
+                        if ($insertDone) {
+                            $thisLinkInstance->updateShowOrder($thisCardId, $linkOrderAt,$thisLink->id);
+                        }
+                    }
+                    $linkOrderAt+=1;
+                }
+            } catch (\Exception $e) {
+                return "error";
+            }
         }
 
         return "ok";
