@@ -283,6 +283,8 @@ class cardInstanceController extends Controller
     public function getCardDataById(Request $request){
         $inData =  $request->all();
         $cardId = $inData['cardId'];
+        $thisCardInstance = new CardInstances();
+        $cardType = $thisCardInstance->getCardTypeById($cardId);
         $thisCardInstanceParams = new InstanceParams();
         $cardParams = $thisCardInstanceParams->getCardInstanceParams($cardId);
         $configParameters=array();
@@ -326,7 +328,7 @@ class cardInstanceController extends Controller
         }
 
 
-        $returnData = [$configParameters, $contentParameters, $subElementArray,$thisCardContent];
+        $returnData = [$configParameters, $contentParameters, $subElementArray,$thisCardContent, $cardType];
         return json_encode($returnData);
 
     }
