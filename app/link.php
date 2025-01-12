@@ -16,6 +16,19 @@ class link extends Model
             throw new Exception('error ".$e.getMessage()."loading links for'.$cardId);
         }
     }
+    public function getLinkInfoForCardId($cardId){
+        $query = "select links.id, links.isExternal, links.link_url, links.layout_link_to, links.description, links.type, links.show_order, layouts.menu_label from links, layouts ".
+            "where card_instance_id = ? ".
+            "and links.layout_link_to=layouts.id ".
+            "order by show_order";
+        try {
+            $linkInfo = DB::select($query, [$cardId]);
+            return $linkInfo;
+        } catch (Exception $e) {
+            throw new Exception('error ".$e.getMessage()."loading links for'.$cardId);
+        }
+    }
+
     public function removeLinksForCardId($cardId, $linkType){
         $query = 'delete from links where card_instance_id = ? and type = ?';
         try {

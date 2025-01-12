@@ -18,6 +18,13 @@ class linkController extends Controller
         return $thisLink->getLinksForCardId($thisCardId);
     }
 
+    public function getLinkInfo(Request $request){
+        $inData =  $request->all();
+        $thisCardId = $inData['cardId'];
+        $thisLink = new link();
+        return $thisLink->getLinkInfoForCardId($thisCardId);
+    }
+
 
     public function createNewLink(Request $request){
         $inData =  $request->all();
@@ -89,12 +96,13 @@ class linkController extends Controller
         $linkDescription = $inData['description'];
         $showOrder = $inData['insertPoint'];
         $addInsert = $inData['addInsert'];
+        $layoutLinkTo = $inData['layout_link_to'];
         $thisLinkInstance = new link;
 
         $currentCardLinks = $thisLinkInstance->getLinksForCardId($thisCardId);
         if($addInsert=='add'){
             $nextShowOrderValue = count($currentCardLinks)+1;
-            $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $linkDescription, $linkUrl, $isExternal, 0, 'U', $nextShowOrderValue);
+            $thisLinkInstance->saveLink($thisOrgId, $thisLayoutId, $thisCardId, $linkDescription, $linkUrl, $isExternal, $layoutLinkTo, 'U', $nextShowOrderValue);
         }else{
             $currentCardLinks=$thisLinkInstance->getLinksForCardId($thisCardId);
 //            $showOrder+=1;
@@ -181,6 +189,7 @@ class linkController extends Controller
         $thisOrient = $inData['orient'];
         $thisCardTitle = $inData['cardTitle'];
         $thisLinkInstance = new link;
+        $layoutInstance = new Layout;
         $thisInstanceParams = new InstanceParams;
         $orientId = $thisInstanceParams->hasInstanceParam($thisCardId, 'orient');
         $cardTitleId = $thisInstanceParams->hasInstanceParam($thisCardId, 'linkMenuTitle');
@@ -237,6 +246,7 @@ class linkController extends Controller
                     $thisLink->layout_link_to,
                     'U',
                     $thisShowOrder);
+                $layoutInstance->updateMenuLabel($thisLink->layout_link_to, $thisLink->menu_label);
                 $thisShowOrder++;
             }
         } catch (\Exception $e) {

@@ -1051,6 +1051,15 @@ class Layout extends Model
         return $retrievedLayouts;
 
     }
+    public function updateMenuLabel($layoutId, $menuLabel){
+        $query = "update layouts set menu_label = ? where id = ?";
+        try {
+            DB::select($query, [$menuLabel, $layoutId]);
+        } catch (\Exception $e) {
+            throw new Exception('error '.$e.getMessage().' updateing menu_label in layouts');
+        }
+
+    }
 
 
 }
