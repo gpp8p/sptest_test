@@ -85,11 +85,16 @@ class LayoutController extends Controller
             }
             $backgroundDisplay='';
         }
-        if($template){
-            $isTemplate='Y';
+        if($template=='Y' || $template=='N'){
+            $isTemplate = $template;
         }else{
-            $isTemplate='N';
+            if($template){
+                $isTemplate='Y';
+            }else{
+                $isTemplate='N';
+            }
         }
+
 
         $layoutInstance = new Layout;
         $newLayoutId = $layoutInstance->createLayoutWithoutBlanks($layoutName, $layoutHeight, $layoutWidth, $layoutDescription, $layoutBackgroundColor, $backgroundImage, $backgroundType, $orgId, $backgroundDisplay, $isTemplate);
