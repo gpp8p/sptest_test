@@ -16,6 +16,17 @@ class link extends Model
             throw new Exception('error ".$e.getMessage()."loading links for'.$cardId);
         }
     }
+
+    public function getMenuLabelForLink($layoutLinkTo){
+        $query = "select menu_label from layouts where id = ?";
+        try {
+            $layoutMenuLabel = DB::select($query, [$layoutLinkTo]);
+            return $layoutMenuLabel[0];
+        } catch (Exception $e) {
+            throw new Exception('error ".$e.getMessage()."loading links for'.$cardId);
+        }
+    }
+
     public function getLinkInfoForCardId($cardId){
         $query = "select links.id, links.isExternal, links.link_url, links.layout_link_to, links.description, links.type, links.show_order, layouts.menu_label from links, layouts ".
             "where card_instance_id = ? ".

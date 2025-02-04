@@ -21,8 +21,20 @@ class linkController extends Controller
     public function getLinkInfo(Request $request){
         $inData =  $request->all();
         $thisCardId = $inData['cardId'];
+
         $thisLink = new link();
-        return $thisLink->getLinkInfoForCardId($thisCardId);
+        $allLinks = $thisLink->getLinksForCardId($thisCardId);
+        $atLink=0;
+        foreach($allLinks as $link){
+            if($link->isExternal==0){
+                $thisLabel = $thisLink->getMenuLabelForLink($link->layout_link_to);
+                $allLinks[$atLink]->menu_label = $thisLabel->menu_label;
+            }else{
+                $allLinks[$atLink]->menu_label = $link->description;
+            }
+            $atLink++;
+        }
+        return $allLinks;
     }
 
 
