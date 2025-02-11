@@ -94,6 +94,7 @@ class link extends Model
         } catch (\Exception $e) {
             throw $e;
         }
+        return $l;
     }
 
 
