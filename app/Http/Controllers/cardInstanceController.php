@@ -385,17 +385,24 @@ class cardInstanceController extends Controller
         $cardHeight = ($bottomRightRow-$topLeftRow)+1;
         $newCardId = $thisCardInstance->createNewCardInstance($layoutId, $topLeftRow,$topLeftCol, $cardHeight, $cardWidth,$cardType, $cardTitle, $restricted);
         $decodedPost[0]=$newCardId;
-        $this->doSaveCardParameters($decodedPost);
+        if($cardType!='Headline'){
+            $this->doSaveCardParameters($decodedPost, $cardTitle, 'vertical');
+        }else{
+            $this->doSaveCardParameters($decodedPost, $cardTitle, 'horizontal');
+        }
+
 
         return "ok";
     }
     public function saveCardParameters(Request $request){
         $inData =  $request->all();
         $decodedPost = json_decode($inData['cardParams']);
-        $this->doSaveCardParameters($decodedPost);
+        $cardTitle = $inData['cardTitle'];
+        $cardOrientation = $inData['cardOrientation'];
+        $this->doSaveCardParameters($decodedPost, $cardTitle, $cardOrientation);
     }
 
-    public function doSaveCardParameters($decodedPost){
+    public function doSaveCardParameters($decodedPost, $cardTitle, $cardOrientation){
         $thisInstanceParams = new InstanceParams;
         $domElements = $decodedPost[3];
         DB::table('instance_params')->where('card_instance_id', '=', $decodedPost[0])->sharedLock()->get();
@@ -413,6 +420,8 @@ class cardInstanceController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
         }
+        $thisInstanceParams->createInstanceParam('linkMenuTitle', $cardTitle, $decodedPost[0], false, 'main');
+        $thisInstanceParams->createInstanceParam('orient', $cardOrientation, $decodedPost[0], false, 'main');
         DB::commit();
         if(count($domElements)>0){
             foreach($domElements as $key => $value){
