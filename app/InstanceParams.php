@@ -54,6 +54,13 @@ class InstanceParams extends Model
         }
     }
     function updateInstanceParam($paramId,$key, $value, $instanceId, $isCss, $domElement){
+        $query = "delete from instance_params where card_instance_id = ? and parameter_key = ? and id != ?";
+        try {
+            DB::select($query, [$instanceId, $key, $paramId ]);
+        } catch (Exception $e) {
+            throw new Exception('error - could not delete existing duplicate  instance param');
+        }
+
         $query = 'update instance_params set parameter_key = ?, parameter_value = ?, card_instance_id = ?, isCss=?, dom_element = ? where id = ?';
 
         try {
