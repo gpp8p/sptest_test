@@ -81,7 +81,7 @@ Route::group([
     Route::get('deleteLayout', 'LayoutController@deleteLayout');
     Route::get('deleteLink', 'linkController@deleteLink');
     Route::get('rmvlay', 'LayoutController@removeCardFromLayout');
-    Route::get('deleteCard', 'LayoutController@deleteC  ard');
+    Route::get('deleteCard', 'LayoutController@deleteCard');
     Route::get('cardList', 'cardInstanceController@getOrgCards');
     Route::post('cardInsert', 'cardInstanceController@cardInsert');
     Route::get('documentDefaults', 'ArchiveController@getDocumentDefaults');
@@ -114,6 +114,8 @@ Route::group([
     Route::get('countMySpaces','LayoutController@countMySpaces')->name('countMySpaces');
     Route::get('getMySpacesPaged','LayoutController@getMySpacesPaged')->name('getMySpacesPaged');
     Route::get('getLinkInfo','linkController@getLinkInfo')->name('getLinkInfo');
+    Route::post('fUpload','fUploadController@fUpload')->name('fUpload');
+
 
 });
 
