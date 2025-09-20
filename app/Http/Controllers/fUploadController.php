@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use App\Services\DateBasedFileStorage;
 
 class fUploadController extends Controller
 {
@@ -21,11 +22,14 @@ class fUploadController extends Controller
         if ($files && !is_array($files)) {
             $files = [$files];
         }
-
+        $userId = $request->input('userId');
+        $orgId = $request->input('orgId');
         // Now validate - adjust based on what we actually have
-        $validator = Validator::make(['files' => $files], [
+        $validator = Validator::make(['files' => $files, 'userId' => $userId, 'orgId' => $orgId]  , [
             'files' => 'required|array|min:1',
             'files.*' => 'file|max:10240', // 10MB max per file
+            'userId' => 'required|string',
+            'orgId' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -36,9 +40,12 @@ class fUploadController extends Controller
         }
 
         $uploadedFiles = [];
+        $storage = new DateBasedFileStorage();
+        $storageDirectory = $storage->createDateDirectory();
 
         try {
             foreach ($request->file('files') as $file) {
+
                 // TODO: Process each file here
                 // - Move to storage location
                 // - Save to database
